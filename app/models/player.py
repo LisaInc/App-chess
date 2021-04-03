@@ -1,13 +1,10 @@
 """Player module."""
 
-from tinydb import TinyDB, Query, where
+from tinydb import TinyDB
 
 
 class Player:
-    """
-    Class of a player with his full name, birth's date, sex, rank and id that will be
-    the primary key in the database.
-    """
+    """Class of a player with his full name, birth's date, sex, rank and id."""
 
     db = TinyDB("db.json")
     players_table = db.table("players")
@@ -24,7 +21,8 @@ class Player:
         self.id = None
 
     def save(self):
-        self.id = self.db.insert(
+        """Save to the db."""
+        self.id = self.players_table.insert(
             {
                 "first_name": self.first_name,
                 "last_name": self.last_name,
@@ -36,15 +34,16 @@ class Player:
 
     def __str__(self):
         """Return the attribute of the player when print is use."""
-        return f"{self.first_name} {self.last_name} \
-            Date de naissance: {self.birth} \
-            Sexe: {self.sex} \
-            Rang: {self.rank}"
+        return f"{self.first_name} \t{self.last_name} \tDate de naissance: \
+            {self.birth} \tSexe: {self.sex} \tRang: {self.rank}"
+
+    def __repr__(self):
+        return str(self)
 
     @classmethod
     def get(cls, id: int):
         """Return tha player from the id."""
-        player = cls.db.get(doc_id=id)
+        player = cls.players_table.get(doc_id=id)
         if player:
             player = cls.deserialized(player)
             player.id = id
@@ -54,17 +53,18 @@ class Player:
 
     @classmethod
     def deserialized(cls, player_info):
-        """Get a dictionnary and return a player obj"""
+        """Get a dictionnary and return a player obj."""
         return Player(**player_info)
 
     def print_rank(self):
+        """Get the rank of the player."""
         return f"{self.first_name} {self.last_name} \t {self.rank}"
 
 
 if __name__ == "__main__":
     player = Player("cc", "jm", "21/02/2000", "f", 0)
     print(player)
-    # player.save()
+    player.save()
     id = player.id
-    player1 = Player.get(id)
+    player1 = Player.get(1)
     print(player1)

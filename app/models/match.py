@@ -8,60 +8,65 @@ class Match:
     """Class of a match from a round."""
 
     db = TinyDB("db.json")
-    players_table = db.table("match")
+    match_table = db.table("match")
 
-    def __init__(self, player1, player2, *result):
-        """All the attribute of a match"""
-        self.player1 = player1  # tuple ?
+    def __init__(self, player1, player2, result={}):
+        """All the attribute of a match."""
+        self.player1 = player1
         self.player2 = player2
-        for r in result:
-            self.result = r
-
-    def add_result(self, result):
-        """Add the result"""
         self.result = result
+        self.id = None
+
+    def add_result(self, result_player1, result_player2):
+        """Add the result."""
+        self.result[self.player1] = result_player1
+        self.result[self.player2] = result_player2
 
     def save(self):
-        """Save to the db"""
-        self.id = self.db.insert(
+        """Save to the db."""
+        self.id = self.match_table.insert(
             {
                 "player1": self.player1.id,
                 "player2": self.player2.id,
-                "result": self.result,
+                "result": (self.result[self.player1], self.result[self.player2]),
             }
         )
 
     def __str__(self):
         """Return the attribute of the match when print is use."""
         if hasattr(self, "result"):
-            return f"{self.player1.__str__()}\n{self.player2.__str__()} \n\
-                        Result: {self.result}\n"
+            return f"{self.player1} Result: {self.result[self.player1]}\n\
+{self.player2} Result: {self.result[self.player2]}\n"
         else:
-            return f"{self.player1.__str__()}\n{self.player2.__str__()} \n"
+            return f"{self.player1}\n{self.player2}\n"
 
     @classmethod
     def get(cls, id: int):
-        """Return tha player from the id."""
-        match = cls.db.get(doc_id=id)
-        if match:
-            match = cls.deserialized(match)
-            match.id = id
+        """Return the match from the id."""
+        match_id = cls.match_table.get(doc_id=id)
+        if match_id:
+            match_id = cls.deserialized(match_id)
+
+            match = Match(Player.get(match_id.player1), Player.get(match_id.player2))
+            match.id = match_id.id
+
+            match.add_result(match_id.result[0], match_id.result[1])
             return match
         else:
             return None
 
     @classmethod
     def deserialized(cls, match_info):
-        """Get a dictionnary and return a player obj"""
+        """Get a dictionnary and return a match obj."""
         return Match(**match_info)
 
 
 if __name__ == "__main__":
     player1 = Player.get(1)
-    player2 = Player.get(8)
-    match = Match(player1, player2, "0-1")
+    player2 = Player.get(2)
+    match = Match(player1, player2)
     # print(match)
-    # match.add_result("0-1")
-    match2 = Match.get(9)
+    match.add_result(0, 1)
+    match.save()
+    match2 = Match.get(match.id)
     print(match2)
-    # match.save()

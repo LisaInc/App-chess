@@ -1,4 +1,5 @@
 from models import Player
+from datetime import str
 
 
 def add_player():
@@ -12,4 +13,4 @@ def add_player():
     while birth != r"[fmo]":
         birth = input("Answer must be f, m or o.\nSex (f/m/o):")
     rank = input("Rank: ")
-    return Player(first_name, last_name, birth, sex, rank)
+    return Player(first_name, last_name, datetime.strptime(birth), sex, rank)
