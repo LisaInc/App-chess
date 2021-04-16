@@ -2,6 +2,7 @@
 
 
 from tinydb import TinyDB
+
 from player import Player
 from round import Round
 from match import Match
@@ -22,7 +23,7 @@ class Tournament:
         players,
         time_control,
         nb_rounds=4,
-        rounds=None,
+        rounds=[],
         description=None,
     ):
         """All the attributes of a tournament."""
@@ -38,6 +39,10 @@ class Tournament:
 
     def save(self):
         """Save to the db."""
+        for player in self.players:
+            player.save()
+        for round in self.rounds:
+            round.save()
         self.id = self.tournament_table.insert(
             {
                 "name": self.name,
@@ -50,10 +55,6 @@ class Tournament:
                 "description": self.description,
             }
         )
-        for player in self.players:
-            player.save()
-        for round in self.rounds:
-            round.save()
 
     def __str__(self):
         """Return the attribute of the tournament when print is use."""
@@ -98,42 +99,101 @@ class Tournament:
         return Tournament(**tournament_info)
 
     def pairing_for_a_round(self):
-        if len(self.rounds) == 1:
-            sorted_players = self.players.sort(key=lambda player: player.rank)
+        """Create the next round."""
+        matchs = []
+        is_first_round = not self.rounds
+        if is_first_round:
             players = sorted(self.players, key=lambda player: player.rank)
-            print(players)
+            half = len(players) // 2
+            first, last = players[:half], players[half:]
+            for player1, player2 in zip(first, last):
+                match = Match(player1, player2)
+                matchs.append(match)
+        else:
+            players_results = self.get_players_results()
+            players_blacklist = self.get_blacklist_player()
+            players_sorted = sorted(
+                players_results, key=lambda player: players_results[player]
+            )
+            for i in range(len(players_sorted)):
+                players_paired = []
+                if players_sorted[i] not in players_paired:
+                    next = 1
+                    for i in range(len(players_sorted)):
+                        if (
+                            players_sorted[i + next]
+                            not in players_blacklist[players_sorted[i]]
+                        ):
+                            match = Match(players_sorted[i], players_sorted[i + next])
+                            matchs.append(match)
+                            players_paired.append(players_sorted[i + next])
+                            break
+                        else:
+                            next += 1
+        self.rounds.append(Round(matchs))
+
+    def get_players_results(self):
+        """Return a dict with key=player, value=result of all match for this player."""
+        players_results = {player: 0 for player in self.players}
+        for round in self.rounds:
+            for match in round.matchs:
+                players_results[match.player1] += match.result[match.player1]
+                players_results[match.player2] += match.result[match.player2]
+        return players_results
+
+    def get_blacklist_player(self):
+        """Return a dict with key=player, value=list of all the opponents."""
+        player_blacklist = {player: [] for player in self.players}
+        for round in self.rounds:
+            for match in round.matchs:
+                player_blacklist[match.player1].append(match.player2)
+                player_blacklist[match.player2].append(match.player1)
+        return player_blacklist
 
 
 if __name__ == "__main__":
-    player1 = Player("cc", "jm", "21/02/2000", "f", 1)
-    # player1.save()
-    player2 = Player("cc", "cc", "21/02/2000", "f", 0)
-    # player2.save()
-    match = Match(player1, player2)
+    player1 = Player("1", "cc", "21/02/2000", "f", 100)
+    player2 = Player("2", "cc", "21/02/2000", "f", 80)
+    player3 = Player("3", "cc", "21/02/2000", "f", 70)
+    player4 = Player("4", "cc", "21/02/2000", "f", 60)
+    player5 = Player("5", "cc", "21/02/2000", "f", 50)
+    player6 = Player("6", "cc", "21/02/2000", "f", 40)
+    player7 = Player("7", "cc", "21/02/2000", "f", 30)
+    player8 = Player("8", "cc", "21/02/2000", "f", 20)
+    """match = Match(player1, player2)
     match2 = Match(player1, player2)
     match.add_result(0, 1)
     match2.add_result(1, 0)
     # match.save()
     # match2.save()
-    round = Round([match, match2])
-    round2 = Round([match2, match])
+    round = Round([match])
+    round2 = Round([match2])
     round.add_endtime()
     round2.add_endtime()
     # round.save()
-    # round2.save()
+    # round2.save()"""
     tournament = Tournament(
         "t1",
         "ville",
         "01/01/2021",
         "01/01/2021",
-        [player1, player2],
+        [player1, player2, player3, player4, player5, player6, player7, player8],
         "blitz",
         2,
-        [round],
-        "waw description",
     )
 
     # tournament.save()
-    tournament1 = Tournament.get(1)
-    print(tournament)
+    # tournament1 = Tournament.get(1)
+
     tournament.pairing_for_a_round()
+    tournament.rounds[0].matchs[0].add_result(1, 0)
+    tournament.rounds[0].matchs[1].add_result(1, 0)
+    tournament.rounds[0].matchs[2].add_result(1, 0)
+    tournament.rounds[0].matchs[3].add_result(1, 0)
+    tournament.save()
+    tournament.pairing_for_a_round()
+    tournament.rounds[1].matchs[0].add_result(1, 0)
+    tournament.rounds[1].matchs[1].add_result(1, 0)
+    tournament.rounds[1].matchs[2].add_result(1, 0)
+    tournament.rounds[1].matchs[3].add_result(1, 0)
+    print(tournament)

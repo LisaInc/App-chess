@@ -13,5 +13,5 @@ class Add_player(View):
             "Menu:\
             1 - New tournament\
             2 - Add player\
-            3 - View history"
+            3 - View HistoryCommand"
         )

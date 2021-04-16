@@ -32,12 +32,13 @@ class Player:
             }
         )
 
-    def __str__(self):
+    def print_details(self):
         """Return the attribute of the player when print is use."""
         return f"{self.first_name} \t{self.last_name} \tDate de naissance: \
             {self.birth} \tSexe: {self.sex} \tRang: {self.rank}"
 
     def __repr__(self):
+        """Repr."""
         return str(self)
 
     @classmethod
@@ -56,7 +57,7 @@ class Player:
         """Get a dictionnary and return a player obj."""
         return Player(**player_info)
 
-    def print_rank(self):
+    def __str__(self):
         """Get the rank of the player."""
         return f"{self.first_name} {self.last_name} \t {self.rank}"
 

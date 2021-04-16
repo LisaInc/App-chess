@@ -1,16 +1,18 @@
-"""Main page command."""
+"""Handle the main page."""
 
-from .abc import Command
-from app import controllers
+from app.commands import AddPlayerCommand, NewTournamentCommand, HistoryCommand
+from app.views import MainPageView
+
+from .abc import Controller
 
 
-class MainPageCommand(Command):
-    """Handle the main page navigation."""
+class MainPageController(Controller):
+    """Main page."""
 
-    key = "main"
-    readable_key = key
-    description = "return to the main page."
-
-    def execute(self, context):
-        """Go to the main page."""
-        context.controller = controllers.MainPageController()
+    def __init__(self):
+        """Init."""
+        super().__init__()
+        self.commands.append(AddPlayerCommand)
+        self.commands.append(NewTournamentCommand)
+        self.commands.append(HistoryCommand)
+        self.view = MainPageView(self.commands)

@@ -20,6 +20,8 @@ class Round:
 
     def save(self):
         """Save to the db."""
+        for match in self.matchs:
+            match.save()
         self.id = self.round_table.insert(
             {
                 "matchs": ",".join(str(match.id) for match in self.matchs),

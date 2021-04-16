@@ -1,25 +1,25 @@
-"""Command interface."""
+"""Controller interface."""
 
 from abc import ABC
-from typing import Any
+
+from app.commands import BlankCommand, QuitCommand, WrongCommand
+from app.views import View
 
 
-class Command(ABC):
-    """Absctract command."""
+class Controller(ABC):
+    """Base controller."""
 
-    key = ""
-    readable_key = key
-    description = ""
-
-    def __init__(self, choice: str):
+    def __init__(self, *args, **kwargs):
         """Init."""
-        pass
+        self.commands = [QuitCommand, BlankCommand]
+        self.view: View = View(self.commands)
 
-    @classmethod
-    def get_choices(cls):
-        """Return the possible choices."""
-        return [cls.key]
+    def get_command(self):
+        """Get the command."""
+        choice = input()
 
-    def execute(self, context: Any):
-        """Execute the command."""
-        pass
+        for Command in self.commands:
+            if choice in Command.get_choices():
+                return Command(choice)
+
+        return WrongCommand(choice)

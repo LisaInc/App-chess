@@ -2,6 +2,28 @@ import os
 
 
 class View:
+
+    SEPARATOR = "-"
+    CENTER_LENGTH = 30
+    LINE = SEPARATOR * CENTER_LENGTH
+
+    messages = []
+    wrong_command = "Wrong command. Please, retry."
+    enter_choice = "Enter a choice: "
+    book_deleted = "The book is deleted !"
+
+    def __init__(self, commands):
+        self.commands = commands
+        self.title = ""
+
+    def print_part(self, part: str):
+        """Print a part."""
+        print(f" {part} ".center(self.CENTER_LENGTH, self.SEPARATOR))
+
+    def clear(self):
+        """Clear the console."""
+        os.system("cls" if os.name == "nt" else "clear")
+
     def display(self):
         """Display the page."""
         self.clear()
