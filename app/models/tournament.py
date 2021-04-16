@@ -3,9 +3,9 @@
 
 from tinydb import TinyDB
 
+from match import Match
 from player import Player
 from round import Round
-from match import Match
 
 
 class Tournament:
@@ -99,56 +99,72 @@ class Tournament:
         return Tournament(**tournament_info)
 
     def pairing_for_a_round(self):
-        """Create the next round."""
-        matchs = []
+        """Create a round."""
         is_first_round = not self.rounds
         if is_first_round:
-            players = sorted(self.players, key=lambda player: player.rank)
-            half = len(players) // 2
-            first, last = players[:half], players[half:]
-            for player1, player2 in zip(first, last):
-                match = Match(player1, player2)
-                matchs.append(match)
+            matchs = self.pairing_for_the_first_round()
         else:
-            players_results = self.get_players_results()
-            players_blacklist = self.get_blacklist_player()
-            players_sorted = sorted(
-                players_results, key=lambda player: players_results[player]
-            )
-            for i in range(len(players_sorted)):
-                players_paired = []
-                if players_sorted[i] not in players_paired:
-                    next = 1
-                    for i in range(len(players_sorted)):
-                        if (
-                            players_sorted[i + next]
-                            not in players_blacklist[players_sorted[i]]
-                        ):
-                            match = Match(players_sorted[i], players_sorted[i + next])
-                            matchs.append(match)
-                            players_paired.append(players_sorted[i + next])
-                            break
-                        else:
-                            next += 1
+            matchs = (
+                self.pairing_for_a_round_score()
+            )  ### FAIRE EN SORTE QUE LES ID SOIT DE PLAYERS ALLER NTM
         self.rounds.append(Round(matchs))
 
-    def get_players_results(self):
-        """Return a dict with key=player, value=result of all match for this player."""
-        players_results = {player: 0 for player in self.players}
-        for round in self.rounds:
-            for match in round.matchs:
-                players_results[match.player1] += match.result[match.player1]
-                players_results[match.player2] += match.result[match.player2]
-        return players_results
+    def pairing_for_the_first_round(self):
+        """Create the first round."""
+        players = sorted(self.players, key=lambda player: player.rank)
+        half = len(players) // 2
+        first, last = players[:half], players[half:]
+        matchs = []
+        for player1, player2 in zip(first, last):
+            match = Match(player1, player2)
+            matchs.append(match)
+        return matchs
 
-    def get_blacklist_player(self):
-        """Return a dict with key=player, value=list of all the opponents."""
-        player_blacklist = {player: [] for player in self.players}
+    def pairing_for_a_round_score(self):
+        """Create the next round."""
+        matchs = []
+        players_results_sorted = self.get_players_results(self.players)
+        players_whitelist = self.get_whitelist_player()
+        while players_results_sorted:
+            player_whitelist_sorted = self.get_players_results(
+                players_whitelist[players_results_sorted[0]]
+            )
+            match = Match(players_results_sorted[0], player_whitelist_sorted[0])
+            matchs.append(match)
+            players_results_sorted.pop(0)
+        print(matchs)
+        return matchs
+
+    def get_players_results(self, players):
+        """
+        Return a dict with key=player, value=result of all match for the list of
+        players given, sorted from the smallest to the biggest score.
+        """
+        if type(players[0]) == int:
+            players_results = {player_id: 0 for player_id in players}
+        elif type(players[0]) == Player:
+            players_results = {player.id: 0 for player in players}
         for round in self.rounds:
             for match in round.matchs:
-                player_blacklist[match.player1].append(match.player2)
-                player_blacklist[match.player2].append(match.player1)
-        return player_blacklist
+                if match.player1.id in players_results:
+                    players_results[match.player1.id] += match.result[match.player1]
+                if match.player2.id in players_results:
+                    players_results[match.player2.id] += match.result[match.player2]
+        return sorted(players_results, key=lambda player: players_results[player])
+
+    def get_whitelist_player(self):
+        """Return a dict with key=player, value=list of all the opponents."""
+        player_whitelist = {
+            player.id: [player2.id for player2 in self.players]
+            for player in self.players
+        }
+        for round in self.rounds:
+            for match in round.matchs:
+                player_whitelist[match.player1.id].remove(match.player2.id)
+                player_whitelist[match.player1.id].remove(match.player1.id)
+                player_whitelist[match.player2.id].remove(match.player1.id)
+                player_whitelist[match.player2.id].remove(match.player2.id)
+        return player_whitelist
 
 
 if __name__ == "__main__":
@@ -182,7 +198,7 @@ if __name__ == "__main__":
         2,
     )
 
-    # tournament.save()
+    tournament.save()
     # tournament1 = Tournament.get(1)
 
     tournament.pairing_for_a_round()
@@ -190,10 +206,10 @@ if __name__ == "__main__":
     tournament.rounds[0].matchs[1].add_result(1, 0)
     tournament.rounds[0].matchs[2].add_result(1, 0)
     tournament.rounds[0].matchs[3].add_result(1, 0)
-    tournament.save()
     tournament.pairing_for_a_round()
     tournament.rounds[1].matchs[0].add_result(1, 0)
     tournament.rounds[1].matchs[1].add_result(1, 0)
     tournament.rounds[1].matchs[2].add_result(1, 0)
     tournament.rounds[1].matchs[3].add_result(1, 0)
+    tournament.save()
     print(tournament)
