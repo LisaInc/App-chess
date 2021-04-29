@@ -10,7 +10,13 @@ class Player:
     players_table = db.table("players")
 
     def __init__(
-        self, first_name: str, last_name: str, birth: str, sex: str, rank: int
+        self,
+        first_name: str,
+        last_name: str,
+        birth: str,
+        sex: str,
+        rank: int,
+        score=0,
     ):
         """All the attributes of a player."""
         self.first_name = first_name
@@ -19,6 +25,8 @@ class Player:
         self.sex = sex
         self.rank = rank
         self.id = None
+        self.score = score
+        self.save()
 
     def save(self):
         """Save to the db."""
@@ -59,13 +67,13 @@ class Player:
 
     def __str__(self):
         """Get the rank of the player."""
-        return f"{self.first_name} {self.last_name} \t {self.rank}"
+        return f"{self.id} {self.first_name} {self.last_name} \t {self.rank}"
 
 
 if __name__ == "__main__":
     player = Player("cc", "jm", "21/02/2000", "f", 0)
     print(player)
-    player.save()
+
     id = player.id
     player1 = Player.get(1)
     print(player1)

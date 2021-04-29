@@ -21,6 +21,8 @@ class Match:
         """Add the result."""
         self.result[self.player1] = result_player1
         self.result[self.player2] = result_player2
+        self.player1.score += 1
+        self.player2.score += 1
 
     def save(self):
         """Save to the db."""
