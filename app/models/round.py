@@ -12,23 +12,27 @@ class Round:
     db = TinyDB("db.json")
     round_table = db.table("round")
 
-    def __init__(self, matchs: list, start_time=None, end_time=None):
+    def __init__(self, matchs: list, start_time=None, end_time=None, id=None):
         """All the attributes of a round."""
         self.matchs = matchs
         self.start_time = str(date.today())
         self.end_time = end_time
+        self.id = id
 
     def save(self):
         """Save to the db."""
         for match in self.matchs:
             match.save()
-        self.id = self.round_table.insert(
-            {
-                "matchs": ",".join(str(match.id) for match in self.matchs),
-                "start_time": self.start_time,
-                "end_time": self.end_time,
-            }
-        )
+        if self.id:
+            self.update()
+        else:
+            self.id = self.round_table.insert(
+                {
+                    "matchs": ",".join(str(match.id) for match in self.matchs),
+                    "start_time": self.start_time,
+                    "end_time": self.end_time,
+                }
+            )
 
     def __str__(self):
         """Return the attribute of the round when print is use."""

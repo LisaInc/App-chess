@@ -26,13 +26,21 @@ class Match:
 
     def save(self):
         """Save to the db."""
-        self.id = self.match_table.insert(
-            {
-                "player1": self.player1.id,
-                "player2": self.player2.id,
-                "result": (self.result[self.player1], self.result[self.player2]),
-            }
-        )
+        if self.id:
+            self.update()
+        else:
+            self.id = self.match_table.insert(
+                {
+                    "player1": self.player1.id,
+                    "player2": self.player2.id,
+                    "result": (self.result[self.player1], self.result[self.player2]),
+                }
+            )
+
+    def update(self):
+        """Update the db."""
+        self.match_table.remove(self.id)
+        self.save()
 
     def __str__(self):
         """Return the attribute of the match when print is use."""
@@ -69,6 +77,6 @@ if __name__ == "__main__":
     match = Match(player1, player2)
     # print(match)
     match.add_result(0, 1)
-    match.save()
     match2 = Match.get(match.id)
+    match.save()
     print(match2)
