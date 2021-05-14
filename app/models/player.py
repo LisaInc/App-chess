@@ -1,79 +1,75 @@
 """Player module."""
 
 from tinydb import TinyDB
+from faker import Faker
+from random import randint, choice
+
+from DB import DB
 
 
 class Player:
     """Class of a player with his full name, birth's date, sex, rank and id."""
 
     db = TinyDB("db.json")
-    players_table = db.table("players")
+    table = db.table("players")
 
-    def __init__(
-        self,
-        first_name: str,
-        last_name: str,
-        birth: str,
-        sex: str,
-        rank: int,
-        score=0,
-    ):
+    def __init__(self, name: str, birth: str, sex: str, rank: int, score=0, id=None):
         """All the attributes of a player."""
-        self.first_name = first_name
-        self.last_name = last_name
+        self.name = name
         self.birth = birth
         self.sex = sex
         self.rank = rank
-        self.id = None
+        self.id = id
         self.score = score
-        self.save()
 
-    def save(self):
-        """Save to the db."""
-        self.id = self.players_table.insert(
-            {
-                "first_name": self.first_name,
-                "last_name": self.last_name,
-                "birth": self.birth,
-                "sex": self.sex,
-                "rank": self.rank,
-            }
-        )
+    def auto_init():
+        """All the attributes of a player."""
+        fake = Faker()
+        sex = choice(["f", "m", "o"])
+        return Player(fake.name(), fake.date(), sex, randint(0, 100))
 
     def print_details(self):
         """Return the attribute of the player when print is use."""
-        return f"{self.first_name} \t{self.last_name} \tDate de naissance: \
+        return f"{self.name} \tDate de naissance: \
             {self.birth} \tSexe: {self.sex} \tRang: {self.rank}"
 
     def __repr__(self):
         """Repr."""
         return str(self)
 
-    @classmethod
-    def get(cls, id: int):
-        """Return tha player from the id."""
-        player = cls.players_table.get(doc_id=id)
-        if player:
-            player = cls.deserialized(player)
-            player.id = id
-            return player
-        else:
-            return None
+    def __str__(self):
+        """Get the rank of the player."""
+        return f"{self.id} {self.name}\t {self.rank}"
+
+    def serialized(self):
+        """Return the player serialized."""
+        serialized = self.__dict__.copy()
+        serialized.pop("id")
+        return serialized
 
     @classmethod
     def deserialized(cls, player_info):
         """Get a dictionnary and return a player obj."""
-        return Player(**player_info)
+        player = Player(**player_info)
+        player.id = player_info.doc_id
+        return player
 
-    def __str__(self):
-        """Get the rank of the player."""
-        return f"{self.id} {self.first_name} {self.last_name} \t {self.rank}"
+    def save(self):
+        DB.save(self)
+
+    def get(id):
+        return DB.get(Player, id)
 
 
 if __name__ == "__main__":
-    player = Player("cc", "jm", "21/02/2000", "f", 0)
-    print(player)
+    player = Player.auto_init()
 
     id = player.id
-    player1 = Player.get(1)
+
+    DB.save(player)
+    print(player)
+    player1 = DB.get(Player, 1)
+
+    player1.rank = 12
     print(player1)
+    DB.save(player1, 1)

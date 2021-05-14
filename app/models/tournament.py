@@ -8,14 +8,14 @@ from tinydb import TinyDB
 from match import Match
 from player import Player
 from round import Round
+from DB import DB
 
 
 class Tournament:
     """Class of a tournament."""
 
     db = TinyDB("db.json")
-    db.purge()
-    tournament_table = db.table("tournament")
+    table = db.table("tournament")
     rounds_played_blacklist = []
 
     def __init__(
@@ -54,60 +54,45 @@ class Tournament:
             details += f"Round {i}: \n {round}"
         return details
 
+    def serialized(self):
+        """Return the match serialized."""
+        return {
+            "name": self.name,
+            "location": self.location,
+            "date_start": self.date_start,
+            "date_end": self.date_end,
+            "nb_rounds": self.nb_rounds,
+            "rounds": [round.id for round in self.rounds],
+            "players": [player.id for player in self.players],
+            "time_control": self.time_control,
+            "description": self.description,
+        }
+
+    @classmethod
+    def deserialized(cls, info):
+        """Get a dictionnary and return a match obj."""
+        return Tournament(
+            info["name"],
+            info["location"],
+            info["date_start"],
+            info["date_end"],
+            [Player.get(player_id) for player_id in info["players"]],
+            info["time_control"],
+            info["nb_rounds"],
+            [Round.get(round_id) for round_id in info["rounds"]],
+            info["description"],
+            info.doc_id,
+        )
+
     def save(self):
-        """Save to the db."""
+        for player in self.players:
+            player.save()
         for round in self.rounds:
             round.save()
-        if self.id:
-            self.update()
-        else:
-            self.id = self.tournament_table.insert(
-                {
-                    "name": self.name,
-                    "location": self.location,
-                    "date_start": self.date_start,
-                    "date_end": self.date_end,
-                    "rounds": ",".join(str(round.id) for round in self.rounds),
-                    "players": ",".join(str(player.id) for player in self.players),
-                    "time_control": self.time_control,
-                    "description": self.description,
-                }
-            )
+        DB.save(self)
 
-    def update(self):
-        """Update the data base."""
-        pass
-
-    @classmethod
-    def get(cls, id: int):
-        """Return the tournament from the id."""
-        tournament_id = cls.tournament_table.get(doc_id=id)
-        if tournament_id:
-            tournament_id = cls.deserialized(tournament_id)
-            players_id = tournament_id.players.split(",")
-            players = [Player.get(int(player)) for player in players_id]
-            rounds_id = tournament_id.rounds.split(",")
-            rounds = [Round.get(int(round)) for round in rounds_id]
-            tournament = Tournament(
-                tournament_id.name,
-                tournament_id.location,
-                tournament_id.date_start,
-                tournament_id.date_end,
-                players,
-                tournament_id.time_control,
-                tournament_id.nb_rounds,
-                rounds,
-                tournament_id.description,
-            )
-            tournament.id = id
-            return tournament
-        else:
-            return None
-
-    @classmethod
-    def deserialized(cls, tournament_info):
-        """Get a dictionnary and return a player obj."""
-        return Tournament(**tournament_info)
+    def get(id):
+        return DB.get(Tournament, id)
 
     def pairing_for_a_round(self):
         """Create a round."""
@@ -166,11 +151,7 @@ class Tournament:
 
 
 if __name__ == "__main__":
-    players = []
-    for i, rank in enumerate(120 - (num * 10) for num in range(1, 9)):
-        player = Player(i, "cc", "21/02/2000", "f", rank)
-        players.append(player)
-
+    players = [Player.auto_init() for _ in range(8)]
     date = "01/01/2021"
     tournament = Tournament("t1", "ville", date, date, players, "blitz")
 
@@ -183,6 +164,5 @@ if __name__ == "__main__":
             tournament.rounds[0].add_endtime()
         round.add_endtime()
     tournament.save()
-    tournament.get(1)
-    tournament.save()
-    print(tournament)
+    tournament1 = Tournament.get(1)
+    print(tournament1)

@@ -3,3 +3,4 @@
 
 from .abc import View
 from .main_page import MainPageView
+from .add_player import AddPlayerView

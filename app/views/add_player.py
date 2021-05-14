@@ -9,4 +9,5 @@ class AddPlayerView(View):
 
     def display_body(self):
         """Menu."""
-        print("Menu")
+        name = input("Please enter the full name:\tleave blanc for a random new player")
+        birth = input("Date of birth (yyyy/mm/dd):")

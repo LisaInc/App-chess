@@ -1,7 +1,7 @@
 """Handle the main page."""
 
-from app.commands import AddPlayerCommand, NewTournamentCommand, HistoryCommand
-from app.views import MainPageView
+from app.commands import AddPlayerCommand
+from app.views import AddPlayerView
 
 from .abc import Controller
 
@@ -13,4 +13,4 @@ class AddPlayerController(Controller):
         """Init."""
         super().__init__()
 
-        self.view = MainPageView(self.commands)
+        self.view = AddPlayerView(self.commands)

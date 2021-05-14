@@ -1,9 +1,7 @@
 """Book delete command."""
 
-from app.views import View
-
 from .abc import Command
-from .main_page import MainPageCommand
+from app import controllers
 
 
 class AddPlayerCommand(Command):
@@ -15,6 +13,4 @@ class AddPlayerCommand(Command):
 
     def execute(self, context):
         """Add the player and go to the main page."""
-        context.controller.book.delete()
-        MainPageCommand("").execute(context)
-        context.controller.view.messages.append(View.book_deleted)
+        context.controller = controllers.AddPlayerController()
