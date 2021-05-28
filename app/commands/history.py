@@ -11,7 +11,7 @@ class HistoryCommand(Command):
 
     key = "history"
     readable_key = key
-    description = "add a player to the db."
+    description = "Check the history."
 
     def execute(self, context):
         """Add the player and go to the main page."""

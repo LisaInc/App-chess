@@ -1,7 +1,7 @@
-from .abc import View
+from .abc import PageView
 
 
-class MainPageView(View):
+class MainPageView(PageView):
     def __init__(self, commands):
         """Init."""
         super().__init__(commands)

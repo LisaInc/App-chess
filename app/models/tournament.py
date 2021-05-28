@@ -85,6 +85,7 @@ class Tournament:
         )
 
     def save(self):
+        """Save a tournament."""
         for player in self.players:
             player.save()
         for round in self.rounds:
@@ -92,6 +93,7 @@ class Tournament:
         DB.save(self)
 
     def get(id):
+        """Get a tournament from it id."""
         return DB.get(Tournament, id)
 
     def pairing_for_a_round(self):

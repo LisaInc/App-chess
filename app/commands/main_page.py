@@ -9,7 +9,7 @@ class MainPageCommand(Command):
 
     key = "main"
     readable_key = key
-    description = "return to the main page."
+    description = "Return to the main page."
 
     def execute(self, context):
         """Go to the main page."""

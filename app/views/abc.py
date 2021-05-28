@@ -59,6 +59,23 @@ class View:
             if command.key:
                 print(command.readable_key, ":", command.description)
 
-    def clear(self):
-        """Clear the console."""
-        os.system("cls" if os.name == "nt" else "clear")
+
+class PageView(View):
+    type = "page"
+
+
+class EventView(View):
+    type = "event"
+
+    def display(self):
+        """Display the page."""
+        self.clear()
+        self.display_header()
+        self.display_messages()
+        self.ask_for_command()
+        self.display_footer()
+        print()
+
+    def ask_for_command(self):
+        """récupère des événements utilisateur et retourne une commande."""
+        pass

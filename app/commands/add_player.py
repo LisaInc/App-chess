@@ -9,7 +9,7 @@ class AddPlayerCommand(Command):
 
     key = "add"
     readable_key = key
-    description = "add a player to the db."
+    description = "Add a player to the db."
 
     def execute(self, context):
         """Add the player and go to the main page."""

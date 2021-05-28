@@ -27,5 +27,5 @@ class DB:
         pass
 
     @classmethod
-    def deserialized(cls, player_info):
+    def deserialized(cls):
         pass

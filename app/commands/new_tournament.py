@@ -11,7 +11,7 @@ class NewTournamentCommand(Command):
 
     key = "new"
     readable_key = key
-    description = "add a player to the db."
+    description = "Start a new tournament."
 
     def execute(self, context):
         """Add the player and go to the main page."""

@@ -16,6 +16,9 @@ class Controller(ABC):
 
     def get_command(self):
         """Get the command."""
+        if self.view.type == "event":
+            return self.view.ask_for_command()
+
         choice = input()
 
         for Command in self.commands:
