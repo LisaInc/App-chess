@@ -10,9 +10,9 @@ class View:
     messages = []
     wrong_command = "Wrong command. Please, retry."
     enter_choice = "Enter a choice: "
-    book_deleted = "The book is deleted !"
 
     def __init__(self, commands):
+        """Init."""
         self.commands = commands
         self.title = ""
 

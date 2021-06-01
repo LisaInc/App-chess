@@ -1,6 +1,5 @@
 """Handle the main page."""
 
-from app.commands import AddPlayerCommand
 from app.views import AddPlayerView
 
 from .abc import Controller

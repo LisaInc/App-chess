@@ -1,7 +1,6 @@
 """Command interface."""
 
 from abc import ABC
-from typing import Any
 
 
 class Command(ABC):
@@ -20,6 +19,6 @@ class Command(ABC):
         """Return the possible choices."""
         return [cls.key]
 
-    def execute(self, context: Any):
+    def execute(self, context):
         """Execute the command."""
         pass

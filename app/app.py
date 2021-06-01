@@ -5,6 +5,7 @@ from app.controllers import Controller, MainPageController
 
 class Application:
     """Application context.
+
     Use the strategy pattern.
     Attrs:
     - controller (Controller): the "strategy". Handle a page in the application.
