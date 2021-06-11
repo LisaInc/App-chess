@@ -29,3 +29,7 @@ class DB:
     @classmethod
     def deserialized(cls):
         pass
+
+    @classmethod
+    def print_all(cls):
+        pass
