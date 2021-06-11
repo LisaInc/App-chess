@@ -4,3 +4,4 @@
 from .abc import Controller
 from .main_page import MainPageController
 from .add_player import AddPlayerController
+from .new_tournament import NewTournamentController

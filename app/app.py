@@ -1,6 +1,11 @@
 """App module."""
 
-from app.controllers import Controller, MainPageController, AddPlayerController
+from app.controllers import (
+    Controller,
+    MainPageController,
+    AddPlayerController,
+    NewTournamentController,
+)
 
 
 class Application:
@@ -15,6 +20,7 @@ class Application:
     possible_path = {
         "mainpage": MainPageController,
         "addplayer": AddPlayerController,
+        "newtournament": NewTournamentController,
     }
 
     def __init__(self):
@@ -27,8 +33,8 @@ class Application:
         while self.running:
             self.controller.view.display()
             command = self.controller.get_command()
-            print("avant ex")
             command.execute(context=self)
 
     def change_page(self, choice):
+        """Change the controller of the app."""
         self.controller = self.possible_path[choice]()

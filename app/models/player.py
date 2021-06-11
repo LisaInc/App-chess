@@ -55,10 +55,20 @@ class Player:
         return player
 
     def save(self):
+        """Save the player in the db."""
         DB.save(self)
 
     def get(id):
+        """Get the player from the db with his id."""
         return DB.get(Player, id)
+
+    @classmethod
+    def print_all(cls):
+        """Print all the player in the db."""
+        all = cls.table.all()
+        for obj_serialized in all:
+            obj_desirialized = cls.deserialized(obj_serialized)
+            print(obj_desirialized)
 
 
 if __name__ == "__main__":
@@ -67,9 +77,9 @@ if __name__ == "__main__":
     id = player.id
 
     DB.save(player)
-    print(player)
     player1 = DB.get(Player, 1)
 
     player1.rank = 12
-    print(player1)
-    DB.save(player1, 1)
+    DB.save(player1)
+
+    DB.print_all(Player)

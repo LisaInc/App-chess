@@ -1,7 +1,6 @@
 """Add a player."""
 from app.commands.add_player import AddPlayerCommand
 from .abc import EventView
-from datetime import date
 import re
 
 

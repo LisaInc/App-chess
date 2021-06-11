@@ -1,7 +1,9 @@
+"""Views class: page view and event view."""
 import os
 
 
 class View:
+    """View class."""
 
     SEPARATOR = "-"
     CENTER_LENGTH = 30
@@ -61,10 +63,14 @@ class View:
 
 
 class PageView(View):
+    """View that that only display informations."""
+
     type = "page"
 
 
 class EventView(View):
+    """View that ask the informations."""
+
     type = "event"
 
     def display(self):

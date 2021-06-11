@@ -7,10 +7,13 @@ from app import app
 class NavigationCommand(Command):
     """Handle the pages navigation."""
 
-    key = "navigation: mainpage - addplayer"
+    key = "navigation: \
+    \n - mainpage \
+    \n - addplayer \
+    \n - newtournament\n"
     readable_key = key
     description = "Go to the wanted page."
-    possible_path = ["mainpage", "addplayer"]
+    possible_path = ["mainpage", "addplayer", "newtournament"]
 
     def __init__(self, choice: str):
         """Init."""

@@ -22,14 +22,3 @@ class DB:
         obj_deserialized = class_use.deserialized(obj_serialized)
         obj_deserialized.id = id
         return obj_deserialized
-
-    def serialized(self):
-        pass
-
-    @classmethod
-    def deserialized(cls):
-        pass
-
-    @classmethod
-    def print_all(cls):
-        pass
