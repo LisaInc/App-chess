@@ -1,6 +1,7 @@
 """Main page command."""
 
 from .abc import Command
+from app import app
 
 
 class NavigationCommand(Command):
@@ -18,7 +19,7 @@ class NavigationCommand(Command):
     @classmethod
     def get_choices(cls):
         """Return all the possible choices."""
-        return cls.possible_path
+        return app.Application.possible_path
 
     def execute(self, context):
         """Go to the wanted controller."""

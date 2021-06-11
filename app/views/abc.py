@@ -72,8 +72,6 @@ class EventView(View):
         self.clear()
         self.display_header()
         self.display_messages()
-        self.ask_for_command()
-        self.display_footer()
         print()
 
     def ask_for_command(self):

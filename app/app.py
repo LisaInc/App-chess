@@ -12,6 +12,11 @@ class Application:
     - running (bool): True if the application is running else False.
     """
 
+    possible_path = {
+        "mainpage": MainPageController,
+        "addplayer": AddPlayerController,
+    }
+
     def __init__(self):
         """Initialize the main page."""
         self.controller: Controller = MainPageController()
@@ -22,11 +27,8 @@ class Application:
         while self.running:
             self.controller.view.display()
             command = self.controller.get_command()
+            print("avant ex")
             command.execute(context=self)
 
     def change_page(self, choice):
-        possible_path = {
-            "mainpage": MainPageController,
-            "addplayer": AddPlayerController,
-        }
-        self.controller = possible_path[choice]()
+        self.controller = self.possible_path[choice]()

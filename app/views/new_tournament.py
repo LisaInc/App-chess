@@ -19,8 +19,8 @@ class NewTornamentCommand(EventView):
             "location": input("Location:"),
             "date_start": input("Start date (yyyy/mm/dd):"),
             "date_end": input("Start date (yyyy/mm/dd):"),
-            "time_control":input("Time control:"),
-            "description": input("Description:"),,
+            "time_control": input("Time control:"),
+            "description": input("Description:"),
         }
         self.check_data_player()
         return AddPlayerCommand(self.player_data)
