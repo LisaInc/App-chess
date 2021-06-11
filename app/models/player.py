@@ -4,7 +4,7 @@ from tinydb import TinyDB
 from faker import Faker
 from random import randint, choice
 
-from DB import DB
+from .db import DB
 
 
 class Player:

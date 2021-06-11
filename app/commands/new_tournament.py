@@ -1,4 +1,4 @@
-"""Book delete command."""
+"""New tournament command."""
 
 from app.views import View
 
@@ -17,4 +17,3 @@ class NewTournamentCommand(Command):
         """Add the player and go to the main page."""
         context.controller.book.delete()
         MainPageCommand("").execute(context)
-        context.controller.view.messages.append(View.book_deleted)

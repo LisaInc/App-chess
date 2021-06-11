@@ -10,3 +10,6 @@ class MainPageView(PageView):
     def display_body(self):
         """Menu."""
         print("Menu")
+        print(
+            "Be sure to add all the players to the data base before a new tournament."
+        )

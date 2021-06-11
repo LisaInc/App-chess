@@ -1,6 +1,6 @@
 """App module."""
 
-from app.controllers import Controller, MainPageController
+from app.controllers import Controller, MainPageController, AddPlayerController
 
 
 class Application:
@@ -23,3 +23,10 @@ class Application:
             self.controller.view.display()
             command = self.controller.get_command()
             command.execute(context=self)
+
+    def change_page(self, choice):
+        possible_path = {
+            "mainpage": MainPageController,
+            "addplayer": AddPlayerController,
+        }
+        self.controller = possible_path[choice]()

@@ -5,10 +5,10 @@ import random
 
 from tinydb import TinyDB
 
-from match import Match
-from player import Player
-from round import Round
-from DB import DB
+from .match import Match
+from .player import Player
+from .round import Round
+from .db import DB
 
 
 class Tournament:

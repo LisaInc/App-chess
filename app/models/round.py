@@ -1,9 +1,9 @@
 """Module of a round."""
 
 from tinydb import TinyDB
-from match import Match
-from player import Player
-from DB import DB
+from .match import Match
+from .player import Player
+from .db import DB
 from datetime import date
 
 

@@ -1,26 +1,26 @@
-"""Add a player."""
-from app.commands.add_player import AddPlayerCommand
+"""Start a new tornament."""
+from app.commands.new_tournament import NewTornamentCommand
 from .abc import EventView
 from datetime import date
 
 
-class AddPlayerView(EventView):
-    """Add a player, check the data, return the info to the add player command."""
+class NewTornamentCommand(EventView):
+    """Start a new tornament."""
 
     def __init__(self, commands):
         """Init."""
         super().__init__(commands)
-        self.title = "Add a new player"
+        self.title = "Start a new tornament"
 
     def ask_for_command(self):
         """Ask the user about the info."""
-        self.player_data = {"name": input("Please enter the full name:")}
-        if self.player_data["name"] == "":
-            return AddPlayerCommand(None)
         self.player_data = {
-            "birth": input("Date of birth (yyyy/mm/dd):"),
-            "sex": input("Sex (f/m/o):"),
-            "rank": input("Rank of this player:"),
+            "name": input("Title of the tornament:"),
+            "location": input("Location:"),
+            "date_start": input("Start date (yyyy/mm/dd):"),
+            "date_end": input("Start date (yyyy/mm/dd):"),
+            "time_control":input("Time control:"),
+            "description": input("Description:"),,
         }
         self.check_data_player()
         return AddPlayerCommand(self.player_data)
@@ -44,18 +44,16 @@ class AddPlayerView(EventView):
                     day = int(elems[2])
                     self.player_data["birth"] = date(year, month, day)
                 else:
-                    self.player_data["birth"] = self.ask_again(
-                        "date of birth (yyyy/mm/dd)"
-                    )
+                    self.ask_again("date of birth (yyyy/mm/dd)")
                     correct_info = False
             else:
-                self.player_data["birth"] = self.ask_again("date of birth (yyyy/mm/dd)")
+                self.ask_again("date of birth (yyyy/mm/dd)")
                 correct_info = False
             if self.player_data["sex"] not in ("f", "m", "o"):
-                self.player_data["sex"] = self.ask_again("sex (m,f,o)")
+                self.ask_again("sex (m,f,o)")
                 correct_info = False
             if not self.player_data["rank"].isdigit():
-                self.player_data["rank"] = self.ask_again("rank")
+                self.ask_again("rank")
                 correct_info = False
 
     @classmethod

@@ -2,7 +2,7 @@
 
 from abc import ABC
 
-from app.commands import BlankCommand, QuitCommand, WrongCommand
+from app.commands import BlankCommand, QuitCommand, WrongCommand, NavigationCommand
 from app.views import View
 
 
@@ -11,7 +11,7 @@ class Controller(ABC):
 
     def __init__(self, *args, **kwargs):
         """Init."""
-        self.commands = [QuitCommand, BlankCommand]
+        self.commands = [QuitCommand, BlankCommand, NavigationCommand]
         self.view: View = View(self.commands)
 
     def get_command(self):
