@@ -1,16 +1,13 @@
 """Main page command."""
 
-from .abc import Command
 from app import app
+from .abc import Command
 
 
 class NavigationCommand(Command):
     """Handle the pages navigation."""
 
-    key = "navigation: \
-    \n - mainpage \
-    \n - addplayer \
-    \n - newtournament\n"
+    key = "navigation:" "\n - mainpage" "\n - addplayer" "\n - newtournament\n"
     readable_key = key
     description = "Go to the wanted page."
     possible_path = ["mainpage", "addplayer", "newtournament"]

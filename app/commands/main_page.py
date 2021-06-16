@@ -1,7 +1,6 @@
 """Main page command."""
 
 from .abc import Command
-from app import controllers
 
 
 class MainPageCommand(Command):
@@ -13,4 +12,4 @@ class MainPageCommand(Command):
 
     def execute(self, context):
         """Go to the main page."""
-        context.controller = controllers.MainPageController()
+        context.change_page("mainpage")

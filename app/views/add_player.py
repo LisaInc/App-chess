@@ -1,18 +1,20 @@
 """Add a player."""
+
+import re  # attention à l'ordre des imports
+
 from app.commands.add_player import AddPlayerCommand
 from .abc import EventView
-import re
 
 
 class AddPlayerView(EventView):
     """Add a player, check the data, return the info to the add player command."""
 
-    def __init__(self, commands):
+    def __init__(self):
         """Init."""
-        super().__init__(commands)
+        super().__init__()
         self.title = "Add a new player"
 
-    def ask_for_command(self):
+    def get_command(self):
         """Ask the user about the info."""
         self.player_data = {
             "name": input(
