@@ -1,10 +1,13 @@
 from .abc import PageView
 
+from app.commands import NewTournamentCommand
+
 
 class MainPageView(PageView):
-    def __init__(self, commands):
+    def __init__(self):
         """Init."""
-        super().__init__(commands)
+        super().__init__()
+        self.commands.append(NewTournamentCommand)
         self.title = "Main Page"
 
     def display_body(self):

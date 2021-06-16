@@ -8,5 +8,4 @@ from .wrong import WrongCommand
 from .main_page import MainPageCommand
 from .add_player import AddPlayerCommand
 from .new_tournament import NewTournamentCommand
-from .history import HistoryCommand
 from .navigation import NavigationCommand

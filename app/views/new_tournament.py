@@ -1,19 +1,22 @@
 """Start a new tournament."""
+
+import re  # attention ordre import
+
 from app.commands.new_tournament import NewTournamentCommand
-from .abc import EventView
 from app.models.player import Player
-import re
+
+from .abc import EventView  # import relatif à la toute fin
 
 
 class NewTournamentView(EventView):
     """Start a new tournament."""
 
-    def __init__(self, commands):
+    def __init__(self):
         """Init."""
-        super().__init__(commands)
+        super().__init__()
         self.title = "Start a new tournament"
 
-    def ask_for_command(self):
+    def get_command(self):
         """Ask the user about the info."""
         if len(Player.table.all()) < 8:
             return NewTournamentCommand(None)

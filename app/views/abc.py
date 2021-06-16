@@ -1,5 +1,8 @@
 """Views class: page view and event view."""
+
 import os
+
+from app.commands import BlankCommand, QuitCommand, WrongCommand, NavigationCommand
 
 
 class View:
@@ -13,9 +16,9 @@ class View:
     wrong_command = "Wrong command. Please, retry."
     enter_choice = "Enter a choice: "
 
-    def __init__(self, commands):
+    def __init__(self):
         """Init."""
-        self.commands = commands
+        self.commands = [QuitCommand, BlankCommand, NavigationCommand]
         self.title = ""
 
     def print_part(self, part: str):
@@ -61,6 +64,16 @@ class View:
             if command.key:
                 print(command.readable_key, ":", command.description)
 
+    def get_command(self):
+        """Get the command."""
+        choice = input()
+
+        for Command in self.commands:
+            if choice in Command.get_choices():
+                return Command(choice)
+
+        return WrongCommand(choice)
+
 
 class PageView(View):
     """View that that only display informations."""
@@ -79,7 +92,3 @@ class EventView(View):
         self.display_header()
         self.display_messages()
         print()
-
-    def ask_for_command(self):
-        """récupère des événements utilisateur et retourne une commande."""
-        pass

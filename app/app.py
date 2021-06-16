@@ -1,11 +1,6 @@
 """App module."""
 
-from app.controllers import (
-    Controller,
-    MainPageController,
-    AddPlayerController,
-    NewTournamentController,
-)
+from app.views import View, AddPlayerView, MainPageView, NewTournamentView
 
 
 class Application:
@@ -13,28 +8,28 @@ class Application:
 
     Use the strategy pattern.
     Attrs:
-    - controller (Controller): the "strategy". Handle a page in the application.
+    - view (View): the "strategy". Handle a page in the application.
     - running (bool): True if the application is running else False.
     """
 
     possible_path = {
-        "mainpage": MainPageController,
-        "addplayer": AddPlayerController,
-        "newtournament": NewTournamentController,
+        "mainpage": MainPageView,
+        "addplayer": AddPlayerView,
+        "newtournament": NewTournamentView,
     }
 
     def __init__(self):
         """Initialize the main page."""
-        self.controller: Controller = MainPageController()
+        self.view: View = MainPageView()
         self.running = True
 
     def run(self):
         """Run the application."""
         while self.running:
-            self.controller.view.display()
-            command = self.controller.get_command()
+            self.view.display()
+            command = self.view.get_command()
             command.execute(context=self)
 
     def change_page(self, choice):
-        """Change the controller of the app."""
-        self.controller = self.possible_path[choice]()
+        """Change the view of the app."""
+        self.view = self.possible_path[choice]()

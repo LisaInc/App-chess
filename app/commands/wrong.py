@@ -1,6 +1,5 @@
 """Wrong command."""
 
-from app.views import View
 
 from .abc import Command
 
@@ -10,4 +9,6 @@ class WrongCommand(Command):
 
     def execute(self, context):
         """Create an error message."""
-        context.controller.view.messages.append(View.wrong_command)
+        from app.views import View
+
+        context.view.messages.append(View.wrong_command)
