@@ -4,21 +4,34 @@
 class DB:
     """Class with all the method use for the db."""
 
-    @classmethod
-    def save(self, obj):
-        """Save to the db."""
-        serialized = obj.serialized()
-        if obj.id:
-            obj.table.update(serialized, doc_ids=[obj.id])
-        else:
-            obj.id = obj.table.insert(serialized)
+    table = None
+
+    def serialized(self):
+        raise NotImplementedError()
 
     @classmethod
-    def get(self, class_use, id):
+    def deserialized(cls, serialized):
+        raise NotImplementedError()
+
+    def save(self):
+        """Save to the db."""
+        serialized = self.serialized()
+        if self.id:
+            self.table.update(serialized, doc_ids=[self.id])
+        else:
+            self.id = self.table.insert(serialized)
+
+    @classmethod
+    def get(cls, id):
         """Return the obj from the id."""
-        obj_serialized = class_use.table.get(doc_id=id)
+        obj_serialized = cls.table.get(doc_id=id)
         if not obj_serialized:
             return None
-        obj_deserialized = class_use.deserialized(obj_serialized)
+        obj_deserialized = cls.deserialized(obj_serialized)
         obj_deserialized.id = id
         return obj_deserialized
+
+    @classmethod
+    def all(cls):
+        """Return all the obj in the db."""
+        return [cls.deserialized(serialized) for serialized in cls.table.all()]

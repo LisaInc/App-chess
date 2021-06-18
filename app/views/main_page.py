@@ -1,9 +1,7 @@
-from .abc import PageView
-
 from app.commands import NewTournamentCommand
 
 
-class MainPageView(PageView):
+class MainPageView:
     def __init__(self):
         """Init."""
         super().__init__()

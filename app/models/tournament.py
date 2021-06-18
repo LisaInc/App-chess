@@ -11,7 +11,7 @@ from .round import Round
 from .db import DB
 
 
-class Tournament:
+class Tournament(DB):
     """Class of a tournament."""
 
     db = TinyDB("db.json")
@@ -90,11 +90,7 @@ class Tournament:
             player.save()
         for round in self.rounds:
             round.save()
-        DB.save(self)
-
-    def get(id):
-        """Get a tournament from it id."""
-        return DB.get(Tournament, id)
+        super().save()
 
     def pairing_for_a_round(self):
         """Create a round."""

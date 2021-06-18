@@ -5,7 +5,7 @@ from .player import Player
 from .db import DB
 
 
-class Match:
+class Match(DB):
     """Class of a match from a round."""
 
     db = TinyDB("db.json")
@@ -42,18 +42,6 @@ class Match:
         }
 
     @classmethod
-    def get(cls, id: int):
-        """Return the match from the id."""
-        match_id = cls.match_table.get(doc_id=id)
-        if match_id:
-            match = cls.deserialized(match_id)
-            print(match_id)
-            match.id = match_id.id
-            return match
-        else:
-            return None
-
-    @classmethod
     def deserialized(cls, info):
         """Get a dictionnary and return a match obj."""
         match = Match(
@@ -65,14 +53,6 @@ class Match:
         result_p1, result_p2 = info["result"]
         match.add_result(result_p1, result_p2)
         return match
-
-    def save(self):
-        self.player1.save()
-        self.player2.save()
-        DB.save(self)
-
-    def get(id):
-        return DB.get(Match, id)
 
 
 if __name__ == "__main__":

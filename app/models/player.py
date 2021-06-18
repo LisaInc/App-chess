@@ -7,7 +7,7 @@ from random import randint, choice
 from .db import DB
 
 
-class Player:
+class Player(DB):
     """Class of a player with his full name, birth's date, sex, rank and id."""
 
     db = TinyDB("db.json")
@@ -54,32 +54,16 @@ class Player:
         player.id = player_info.doc_id
         return player
 
-    def save(self):
-        """Save the player in the db."""
-        DB.save(self)
-
-    def get(id):
-        """Get the player from the db with his id."""
-        return DB.get(Player, id)
-
-    @classmethod
-    def print_all(cls):
-        """Print all the player in the db."""
-        all = cls.table.all()
-        for obj_serialized in all:
-            obj_desirialized = cls.deserialized(obj_serialized)
-            print(obj_desirialized)
-
 
 if __name__ == "__main__":
     player = Player.auto_init()
 
     id = player.id
 
-    DB.save(player)
-    player1 = DB.get(Player, 1)
+    player.save()
+    player1 = Player.get(1)
 
     player1.rank = 12
-    DB.save(player1)
+    player1.save()
 
-    DB.print_all(Player)
+    print(Player.all())

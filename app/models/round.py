@@ -7,7 +7,7 @@ from .db import DB
 from datetime import date
 
 
-class Round:
+class Round(DB):
     """Class of a round from a tournament."""
 
     db = TinyDB("db.json")
@@ -58,10 +58,7 @@ class Round:
     def save(self):
         for match in self.matchs:
             match.save()
-        DB.save(self)
-
-    def get(id):
-        return DB.get(Round, id)
+        super().save(self)
 
 
 if __name__ == "__main__":

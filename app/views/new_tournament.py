@@ -1,14 +1,12 @@
 """Start a new tournament."""
 
-import re  # attention ordre import
+import re
 
 from app.commands.new_tournament import NewTournamentCommand
 from app.models.player import Player
 
-from .abc import EventView  # import relatif à la toute fin
 
-
-class NewTournamentView(EventView):
+class NewTournamentView:
     """Start a new tournament."""
 
     def __init__(self):

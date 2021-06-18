@@ -73,22 +73,3 @@ class View:
                 return Command(choice)
 
         return WrongCommand(choice)
-
-
-class PageView(View):
-    """View that that only display informations."""
-
-    type = "page"
-
-
-class EventView(View):
-    """View that ask the informations."""
-
-    type = "event"
-
-    def display(self):
-        """Display the page."""
-        self.clear()
-        self.display_header()
-        self.display_messages()
-        print()
