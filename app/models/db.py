@@ -26,6 +26,7 @@ class DB:
         """Return the obj from the id."""
         obj_serialized = cls.table.get(doc_id=id)
         if not obj_serialized:
+            print("Wrong id")
             return None
         obj_deserialized = cls.deserialized(obj_serialized)
         obj_deserialized.id = id

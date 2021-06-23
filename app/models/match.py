@@ -1,6 +1,7 @@
 """Module of a match."""
 
 from tinydb import TinyDB
+
 from .player import Player
 from .db import DB
 

@@ -1,9 +1,11 @@
 """Module of a tournament."""
 
 
-import random
-
+import datetime
+from faker import Faker
+from random import choice
 from tinydb import TinyDB
+from datetime import date
 
 from .match import Match
 from .player import Player
@@ -42,6 +44,16 @@ class Tournament(DB):
         self.time_control = time_control
         self.description = description
         self.id = id
+
+    def auto_init():
+        """All the attributes of a player."""
+        fake = Faker()
+        city = fake.city()
+        name = city + "tournament"
+        time_control = choice(["Bullet", "Blitz", "Speed chess"])
+        players = [Player.auto_init() for _ in range(8)]
+        date = str(datetime.date.today())
+        return Tournament(name, city, date, date, players, time_control)
 
     def __str__(self):
         """Return the attribute of the tournament when print is use."""
@@ -150,6 +162,8 @@ class Tournament(DB):
 
 if __name__ == "__main__":
     players = [Player.auto_init() for _ in range(8)]
+    for player in players:
+        player.save()
     date = "01/01/2021"
     tournament = Tournament("t1", "ville", date, date, players, "blitz")
 
@@ -158,9 +172,12 @@ if __name__ == "__main__":
         tournament.pairing_for_a_round()
         round = tournament.rounds[-1]
         for match in round.matchs:
-            match.add_result(*random.choice(choices))
+            match.add_result(*choice(choices))
             tournament.rounds[0].add_endtime()
         round.add_endtime()
     tournament.save()
     tournament1 = Tournament.get(1)
     print(tournament1)
+
+    Tournament1 = Tournament.auto_init()
+    Tournament1.save()

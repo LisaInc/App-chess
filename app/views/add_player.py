@@ -3,10 +3,10 @@
 import re  # attention à l'ordre des imports
 
 from app.commands.add_player import AddPlayerCommand
-from .abc import EventView
+from .abc import View
 
 
-class AddPlayerView(EventView):
+class AddPlayerView(View):
     """Add a player, check the data, return the info to the add player command."""
 
     def __init__(self):

@@ -1,10 +1,11 @@
 """Module of a round."""
 
 from tinydb import TinyDB
+from datetime import date
+
 from .match import Match
 from .player import Player
 from .db import DB
-from datetime import date
 
 
 class Round(DB):
@@ -13,10 +14,12 @@ class Round(DB):
     db = TinyDB("db.json")
     table = db.table("round")
 
-    def __init__(self, matchs: list, start_time=None, end_time=None, id=None):
+    def __init__(
+        self, matchs: list, start_time=str(date.today()), end_time=None, id=None
+    ):
         """All the attributes of a round."""
         self.matchs = matchs
-        self.start_time = str(date.today())
+        self.start_time = start_time
         self.end_time = end_time
         self.id = id
 
@@ -56,9 +59,10 @@ class Round(DB):
         )
 
     def save(self):
+        """Save the round in he DB."""
         for match in self.matchs:
             match.save()
-        super().save(self)
+        super().save()
 
 
 if __name__ == "__main__":
@@ -73,5 +77,4 @@ if __name__ == "__main__":
     round.add_endtime()
 
     round.save()
-    round1 = Round.get(1)
-    print(round1)
+    print(round)

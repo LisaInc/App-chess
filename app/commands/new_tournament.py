@@ -13,11 +13,12 @@ class NewTournamentCommand(Command):
 
     def __init__(self, tournament_info):
         """Init the command and the player to add to the db."""
-        if tournament_info:
-            self.tournament = Tournament(**tournament_info)
+        self.tournament = (
+            Tournament(**tournament_info) if tournament_info else Tournament.auto_init()
+        )
 
     def execute(self, context):
         """Add the player and go to the main page."""
         if self.tournament:
-            self.player.save()
+            self.tournament.save()
         context.change_page("mainpage")

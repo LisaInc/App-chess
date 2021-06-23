@@ -1,15 +1,16 @@
 """Views class: page view and event view."""
 
 import os
-
+from rich.console import Console
 from app.commands import BlankCommand, QuitCommand, WrongCommand, NavigationCommand
 
 
 class View:
     """View class."""
 
+    console = Console()
     SEPARATOR = "-"
-    CENTER_LENGTH = 30
+    CENTER_LENGTH = 198
     LINE = SEPARATOR * CENTER_LENGTH
 
     messages = []
