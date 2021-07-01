@@ -1,7 +1,8 @@
 """Views class: page view and event view."""
 
-import os
+from rich.table import Table
 from rich.console import Console
+
 from app.commands import BlankCommand, QuitCommand, WrongCommand, NavigationCommand
 
 
@@ -24,15 +25,11 @@ class View:
 
     def print_part(self, part: str):
         """Print a part."""
-        print(f" {part} ".center(self.CENTER_LENGTH, self.SEPARATOR))
-
-    def clear(self):
-        """Clear the console."""
-        os.system("cls" if os.name == "nt" else "clear")
+        self.console.print(f" {part} ", style="yellow bold", justify="Right")
 
     def display(self):
         """Display the page."""
-        self.clear()
+        self.console.clear()
         self.display_header()
         self.display_messages()
         self.display_body()
@@ -74,3 +71,17 @@ class View:
                 return Command(choice)
 
         return WrongCommand(choice)
+
+    def print_table(self, colomns, rows, title=None):
+        """
+        Print a table with:
+        * columns names in a list
+        * list of row (tuple)
+        * title (str) optionnal
+        """
+        table = Table(title=title) if title else Table()
+        for column in colomns:
+            table.add_column(column, style="bold")
+        for row in rows:
+            table.add_row(*row)
+        self.console.print(table)

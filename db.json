@@ -1,1 +1,82 @@
-{"players": {"1": {"name": "Damon Freeman", "birth": "2008-02-15", "sex": "o", "rank": 2, "score": 0}, "2": {"name": "Henry Mitchell", "birth": "2004-02-02", "sex": "f", "rank": 4, "score": 0}, "3": {"name": "Donna Powell", "birth": "2013-04-20", "sex": "m", "rank": 87, "score": 0}, "4": {"name": "Michelle Morales", "birth": "2000-06-25", "sex": "f", "rank": 79, "score": 0}, "5": {"name": "Mrs. Sylvia Griffith", "birth": "2013-11-29", "sex": "o", "rank": 13, "score": 0}, "6": {"name": "Joseph Lee", "birth": "1976-01-21", "sex": "o", "rank": 59, "score": 0}, "7": {"name": "Harry Erickson", "birth": "1987-08-21", "sex": "m", "rank": 96, "score": 0}, "8": {"name": "Rick Callahan", "birth": "2004-06-16", "sex": "m", "rank": 95, "score": 0}}, "tournament": {"1": {"name": "New Christinaboroughtournament", "location": "New Christinaborough", "date_start": "2021-06-24", "date_end": "2021-06-24", "nb_rounds": 4, "rounds": [], "players": [1, 2, 3, 4, 5, 6, 7, 8], "time_control": "Speed chess", "description": null}}}
+{
+    "players": {
+        "1": {
+            "name": "Damon Freeman",
+            "birth": "2008-02-15",
+            "sex": "o",
+            "rank": 2,
+            "score": 0
+        },
+        "2": {
+            "name": "Henry Mitchell",
+            "birth": "2004-02-02",
+            "sex": "f",
+            "rank": 4,
+            "score": 0
+        },
+        "3": {
+            "name": "Donna Powell",
+            "birth": "2013-04-20",
+            "sex": "m",
+            "rank": 87,
+            "score": 0
+        },
+        "4": {
+            "name": "Michelle Morales",
+            "birth": "2000-06-25",
+            "sex": "f",
+            "rank": 79,
+            "score": 0
+        },
+        "5": {
+            "name": "Mrs. Sylvia Griffith",
+            "birth": "2013-11-29",
+            "sex": "o",
+            "rank": 13,
+            "score": 0
+        },
+        "6": {
+            "name": "Joseph Lee",
+            "birth": "1976-01-21",
+            "sex": "o",
+            "rank": 59,
+            "score": 0
+        },
+        "7": {
+            "name": "Harry Erickson",
+            "birth": "1987-08-21",
+            "sex": "m",
+            "rank": 96,
+            "score": 0
+        },
+        "8": {
+            "name": "Rick Callahan",
+            "birth": "2004-06-16",
+            "sex": "m",
+            "rank": 95,
+            "score": 0
+        }
+    },
+    "tournament": {
+        "1": {
+            "name": "New Christinaboroughtournament",
+            "location": "New Christinaborough",
+            "date_start": "2021-06-24",
+            "date_end": "2021-06-24",
+            "nb_rounds": 4,
+            "rounds": [],
+            "players": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+            ],
+            "time_control": "Speed chess",
+            "description": null
+        }
+    }
+}

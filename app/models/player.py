@@ -30,8 +30,10 @@ class Player(DB):
 
     def print_details(self):
         """Return the attribute of the player when print is use."""
-        return f"{self.name} \tDate de naissance: \
-            {self.birth} \tSexe: {self.sex} \tRang: {self.rank}"
+        return (
+            f"{self.name} \tDate de naissance"
+            f"{self.birth} \tSexe: {self.sex} \tRang: {self.rank}"
+        )
 
     def __repr__(self):
         """Repr."""

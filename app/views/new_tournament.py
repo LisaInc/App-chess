@@ -3,7 +3,6 @@
 from app.commands.navigation import NavigationCommand
 import re
 from rich.table import Table
-from rich.console import Console
 
 from app.commands.new_tournament import NewTournamentCommand
 from app.models.player import Player
@@ -22,11 +21,11 @@ class NewTournamentView(View):
     def get_command(self):
         """Ask the user about the info."""
         while len(Player.table.all()) < 8:
-            choice = input(
-                "Not enough player in the database,\n\
-                press 1 to generate a random tournament with random players\n\
-                press 2 to go to the main page:"
+            print(
+                "Not enough player in the database,\n"
+                "press 1 to generate a random tournament with random players\n"
             )
+            choice = input("press 2 to go to the main page:")
             if choice == "1":
                 return NewTournamentCommand(None)
             elif choice == "2":
@@ -49,17 +48,24 @@ class NewTournamentView(View):
         self.tournament_data["description"] = (input("Description (optional):"),)
 
         self.check_data_tournement()
+
         players = []
         while len(players) < 8:
-            table = Table(title="Player regitered in the database")
-            print("Choose a player from the list:")
-            table.add_column("ID", style="blue")
-            table.add_column("Informations", style="magenta")
-            for player in Player.all():
-                table.add_row(player.id, player.name)  ####TEST FINI ICI
+            print("Choose a player from the table:")
+            self.print_table(
+                ["id", "Names"],
+                [(str(player.id), player.name) for player in Player.all()],
+            )
             id = input("Player's id:")
             if id.isdigit():
-                players.add[Player.get(id)]
+                players.append(Player.get(id))
+                self.print_table(
+                    ["id", "Names"],
+                    [(str(player.id), player.name) for player in players],
+                    "Players choosen for the tournament",
+                )
+            else:
+                print("Enter the player's id")
         return NewTournamentCommand(self.tournament_data)
 
     def check_data_tournement(self):

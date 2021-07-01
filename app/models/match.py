@@ -29,8 +29,10 @@ class Match(DB):
     def __str__(self):
         """Return the attribute of the match when print is use."""
         if hasattr(self, "result"):
-            return f"{self.player1} Result: {self.result[self.player1]}\n\
-{self.player2} Result: {self.result[self.player2]}\n"
+            return (
+                f"{self.player1} Result: {self.result[self.player1]}\n"
+                f"{self.player2} Result: {self.result[self.player2]}\n"
+            )
         else:
             return f"{self.player1}\n{self.player2}\n"
 

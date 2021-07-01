@@ -1,6 +1,7 @@
+from art import *
+
 from app.commands import NewTournamentCommand
 from .abc import View
-from rich.console import Console
 
 
 class MainPageView(View):
@@ -12,8 +13,8 @@ class MainPageView(View):
 
     def display_body(self):
         """Menu."""
-        console = Console()
-        console.print(
+        tprint("Welcome", font="rnd")
+        self.console.print(
             ":chess_pawn: Welcome :chess_pawn: \nMenu", style="bold", justify="center"
         )
         print(
