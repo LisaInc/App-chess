@@ -1,7 +1,8 @@
 """Play a round command."""
 
 from .abc import Command
-from app.models import 
+
+# from app.models import Tournament
 
 
 class PlayARound(Command):

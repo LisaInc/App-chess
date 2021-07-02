@@ -1,5 +1,6 @@
 """Views class: page view and event view."""
 
+import re
 from rich.table import Table
 from rich.console import Console
 
@@ -85,3 +86,10 @@ class View:
         for row in rows:
             table.add_row(*row)
         self.console.print(table)
+
+    def check_date(
+        self,
+        date,
+    ):
+        """Check if the str is a date,."""
+        return bool(re.search("\d{4}/\d{2}/\d{2}", date))

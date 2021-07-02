@@ -1,6 +1,13 @@
 """App module."""
 
-from app.views import View, AddPlayerView, MainPageView, NewTournamentView
+from app.views import (
+    View,
+    AddPlayerView,
+    MainPageView,
+    NewTournamentView,
+    PlayARoundView,
+    ContinueView,
+)
 
 
 class Application:
@@ -14,8 +21,10 @@ class Application:
 
     possible_path = {
         "mainpage": MainPageView,
-        "addplayer": AddPlayerView,
-        "newtournament": NewTournamentView,
+        "add": AddPlayerView,
+        "new": NewTournamentView,
+        "continue": ContinueView,
+        "play_round": PlayARoundView,
     }
 
     def __init__(self):

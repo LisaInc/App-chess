@@ -35,7 +35,7 @@ class AddPlayerView(View):
         correct_info = False
         while not correct_info:
             correct_info = True
-            if not re.search("\d{4}/\d{2}/\d{2}", self.player_data["birth"]):
+            if not self.check_date(self.player_data["birth"]):
                 self.player_data["birth"] = self.ask_again("date of birth (yyyy/mm/dd)")
                 correct_info = False
             if self.player_data["sex"] not in ("f", "m", "o"):
@@ -44,6 +44,8 @@ class AddPlayerView(View):
             if not self.player_data["rank"].isdigit():
                 self.player_data["rank"] = self.ask_again("rank")
                 correct_info = False
+            else:
+                self.player_data["rank"] = int(self.player_data["rank"])
 
     @classmethod
     def ask_again(self, wrong_info):

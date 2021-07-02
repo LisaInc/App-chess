@@ -21,4 +21,4 @@ class NewTournamentCommand(Command):
         """Add the player and go to the main page."""
         if self.tournament:
             self.tournament.save()
-        context.change_page("mainpage")
+        context.change_page("play_a_round")

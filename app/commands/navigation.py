@@ -7,10 +7,16 @@ from .abc import Command
 class NavigationCommand(Command):
     """Handle the pages navigation."""
 
-    key = "navigation:" "\n - mainpage" "\n - addplayer" "\n - newtournament\n"
+    key = (
+        "Navigation:"
+        "\n - Menu"
+        "\n - Add : add a new player"
+        "\n - New : Start a new tournament"
+        "\n - Continue: Continue a tournament saved on the db"
+    )
     readable_key = key
     description = "Go to the wanted page."
-    possible_path = ["mainpage", "addplayer", "newtournament"]
+    possible_path = ["menu", "add", "new", "continue"]
 
     def __init__(self, choice: str):
         """Init."""

@@ -8,3 +8,5 @@ from .wrong import WrongCommand
 from .add_player import AddPlayerCommand
 from .new_tournament import NewTournamentCommand
 from .navigation import NavigationCommand
+from .play_a_round import PlayARound
+from .continue_tournament import ContinueCommand

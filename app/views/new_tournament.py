@@ -1,8 +1,8 @@
 """Start a new tournament."""
 
+from app.views import add_player
 from app.commands.navigation import NavigationCommand
-import re
-from rich.table import Table
+
 
 from app.commands.new_tournament import NewTournamentCommand
 from app.models.player import Player
@@ -17,6 +17,7 @@ class NewTournamentView(View):
         """Init."""
         super().__init__()
         self.title = "Start a new tournament"
+        self.all_players = Player.all()
 
     def get_command(self):
         """Ask the user about the info."""
@@ -54,18 +55,24 @@ class NewTournamentView(View):
             print("Choose a player from the table:")
             self.print_table(
                 ["id", "Names"],
-                [(str(player.id), player.name) for player in Player.all()],
+                [(str(player.id), player.name) for player in self.all_players],
             )
             id = input("Player's id:")
-            if id.isdigit():
-                players.append(Player.get(id))
+            if id.isdigit() and int(id) < len(self.all_players):
+                player_to_add = Player.get(int(id))
+                players.append(player_to_add)
                 self.print_table(
                     ["id", "Names"],
                     [(str(player.id), player.name) for player in players],
                     "Players choosen for the tournament",
                 )
+                for index, player in enumerate(self.all_players):
+                    if player.id == int(id):
+                        self.all_players.pop(index)
             else:
+                self.console.clear()
                 print("Enter the player's id")
+        self.tournament_data["players"] = players
         return NewTournamentCommand(self.tournament_data)
 
     def check_data_tournement(self):
@@ -73,12 +80,12 @@ class NewTournamentView(View):
         correct_info = False
         while not correct_info:
             correct_info = True
-            if not re.search("\d{4}/\d{2}/\d{2}", self.tournament_data["date_start"]):
+            if not self.check_date(self.tournament_data["date_start"]):
                 self.tournament_data["date_start"] = self.ask_again(
                     "start day (yyyy/mm/dd)"
                 )
                 correct_info = False
-            if not re.search("\d{4}/\d{2}/\d{2}", self.tournament_data["date_end"]):
+            if not self.check_date(self.tournament_data["date_end"]):
                 self.tournament_data["date_end"] = self.ask_again(
                     "end day (yyyy/mm/dd)"
                 )
