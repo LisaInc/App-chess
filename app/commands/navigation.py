@@ -9,18 +9,20 @@ class NavigationCommand(Command):
 
     key = (
         "Navigation:"
-        "\n - Menu"
+        "\n - Main page"
         "\n - Add : add a new player"
         "\n - New : Start a new tournament"
         "\n - Continue: Continue a tournament saved on the db"
     )
     readable_key = key
     description = "Go to the wanted page."
-    possible_path = ["menu", "add", "new", "continue"]
+    possible_path = ["main page", "add", "new", "continue"]
 
-    def __init__(self, choice: str):
+    def __init__(self, choice: str, *arg):
         """Init."""
         self.choice = choice
+        if arg:
+            self.arg = arg[0]
 
     @classmethod
     def get_choices(cls):
@@ -29,4 +31,7 @@ class NavigationCommand(Command):
 
     def execute(self, context):
         """Go to the wanted controller."""
-        context.change_page(self.choice)
+        if hasattr(self, "arg"):
+            context.change_page(self.choice, self.arg)
+        else:
+            context.change_page(self.choice)

@@ -2,6 +2,7 @@
 
 from tinydb import TinyDB
 from datetime import date
+from random import choice
 
 from .match import Match
 from .player import Player
@@ -64,17 +65,29 @@ class Round(DB):
             match.save()
         super().save()
 
+    def is_ended(self):
+        for match in self.matchs:
+            if not match.result:
+                return False
+        return True
+
+    def auto_play(self):
+        choices = [(0, 1), (1, 0), (0.5, 0.5)]
+        for match in self.matchs:
+            match.add_result(*choice(choices))
+
 
 if __name__ == "__main__":
-    player1 = Player.auto_init()
-    player2 = Player.auto_init()
-    match = Match(player1, player2)
-    match2 = Match(player1, player2)
-    match.add_result(1, 1)
-    match2.add_result(1, 0)
-    liste = [match, match2]
+    liste = []
+    for _ in range(2):
+        players = [Player.auto_init() for _ in range(2)]
+        for player in players:
+            player.save()
+        liste.append(Match(players[0], players[1]))
     round = Round(liste)
-    round.add_endtime()
-
     round.save()
-    print(round)
+    round = round.get(1)
+    round.matchs[0].add_result(45555, 555)
+    round.add_endtime()
+    for match in round.matchs:
+        print(match.result)

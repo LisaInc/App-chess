@@ -61,11 +61,9 @@ if __name__ == "__main__":
     player = Player.auto_init()
 
     id = player.id
-
-    player.save()
     player1 = Player.get(1)
 
     player1.rank = 12
     player1.save()
 
-    print(Player.all())
+    print(player1)

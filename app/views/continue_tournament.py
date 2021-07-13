@@ -1,6 +1,6 @@
 from .abc import View
 
-from app.commands import ContinueCommand
+from app.commands import ContinueCommand, NavigationCommand
 from app.models import Tournament
 
 
@@ -13,6 +13,8 @@ class ContinueView(View):
 
     def get_command(self):
         tournament_choosen = None
+        if not self.all_tournaments:
+            return NavigationCommand("mainpage", 'There is no tournament in the database')
         while not tournament_choosen:
             self.print_table(
                 ["id", "name"],
@@ -22,7 +24,7 @@ class ContinueView(View):
                 ],
                 "List of all the tournament in the data base:",
             )
-            id = input("Tournament's id:")
+            id = input("Tournament's id: ")
             if id.isdigit():
                 tournament_choosen = Tournament.get(int(id))
                 if tournament_choosen:

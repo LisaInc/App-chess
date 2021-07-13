@@ -1,6 +1,5 @@
 """Start a new tournament."""
 
-from app.views import add_player
 from app.commands.navigation import NavigationCommand
 
 
@@ -58,20 +57,21 @@ class NewTournamentView(View):
                 [(str(player.id), player.name) for player in self.all_players],
             )
             id = input("Player's id:")
-            if id.isdigit() and int(id) < len(self.all_players):
+            if id.isdigit():
                 player_to_add = Player.get(int(id))
-                players.append(player_to_add)
-                self.print_table(
-                    ["id", "Names"],
-                    [(str(player.id), player.name) for player in players],
-                    "Players choosen for the tournament",
-                )
-                for index, player in enumerate(self.all_players):
-                    if player.id == int(id):
-                        self.all_players.pop(index)
-            else:
-                self.console.clear()
-                print("Enter the player's id")
+                if player_to_add and player_to_add not in players:
+                    players.append(player_to_add)
+                    self.print_table(
+                        ["id", "Names"],
+                        [(str(player.id), player.name) for player in players],
+                        "Players choosen for the tournament",
+                    )
+                    for index, player in enumerate(self.all_players):
+                        if player.id == int(id):
+                            self.all_players.pop(index)
+                            continue
+                    continue
+            print("Enter the player's id")
         self.tournament_data["players"] = players
         return NewTournamentCommand(self.tournament_data)
 

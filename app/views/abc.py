@@ -4,7 +4,7 @@ import re
 from rich.table import Table
 from rich.console import Console
 
-from app.commands import BlankCommand, QuitCommand, WrongCommand, NavigationCommand
+from app.commands import BlankCommand, QuitCommand, WrongCommand
 
 
 class View:
@@ -19,9 +19,9 @@ class View:
     wrong_command = "Wrong command. Please, retry."
     enter_choice = "Enter a choice: "
 
-    def __init__(self):
+    def __init__(self, *arg):
         """Init."""
-        self.commands = [QuitCommand, BlankCommand, NavigationCommand]
+        self.commands = [QuitCommand, BlankCommand]
         self.title = ""
 
     def print_part(self, part: str):
@@ -48,8 +48,8 @@ class View:
         if self.messages:
             for message in self.messages:
                 print("\n*", message)
-        self.messages = []
         print()
+        self.messages = []
 
     def display_body(self):
         """Display the body."""
@@ -87,9 +87,6 @@ class View:
             table.add_row(*row)
         self.console.print(table)
 
-    def check_date(
-        self,
-        date,
-    ):
+    def check_date(self, date):
         """Check if the str is a date,."""
         return bool(re.search("\d{4}/\d{2}/\d{2}", date))

@@ -49,7 +49,7 @@ class Tournament(DB):
         """All the attributes of a player."""
         fake = Faker()
         city = fake.city()
-        name = city + "tournament"
+        name = city + " tournament"
         time_control = choice(["Bullet", "Blitz", "Speed chess"])
         players = [Player.auto_init() for _ in range(8)]
         date = str(datetime.date.today())

@@ -20,11 +20,11 @@ class Application:
     """
 
     possible_path = {
-        "mainpage": MainPageView,
+        "main page": MainPageView,
         "add": AddPlayerView,
         "new": NewTournamentView,
         "continue": ContinueView,
-        "play_round": PlayARoundView,
+        "play round": PlayARoundView,
     }
 
     def __init__(self):
@@ -39,6 +39,6 @@ class Application:
             command = self.view.get_command()
             command.execute(context=self)
 
-    def change_page(self, choice):
+    def change_page(self, choice, *arg):
         """Change the view of the app."""
-        self.view = self.possible_path[choice]()
+        self.view = self.possible_path[choice](*arg)

@@ -1,6 +1,8 @@
 """New tournament command."""
+
 from app.models.tournament import Tournament
 from .abc import Command
+from time import sleep
 
 
 class NewTournamentCommand(Command):
@@ -9,7 +11,6 @@ class NewTournamentCommand(Command):
     key = "new"
     readable_key = key
     description = "Start a new tournament."
-    tournament = None
 
     def __init__(self, tournament_info):
         """Init the command and the player to add to the db."""
@@ -19,6 +20,6 @@ class NewTournamentCommand(Command):
 
     def execute(self, context):
         """Add the player and go to the main page."""
-        if self.tournament:
-            self.tournament.save()
-        context.change_page("play_a_round")
+        self.tournament.pairing_for_a_round()
+        self.tournament.save()
+        context.change_page("play round", Tournament.get(self.tournament.id))
