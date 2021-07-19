@@ -2,7 +2,6 @@
 
 from app.models.tournament import Tournament
 from .abc import Command
-from time import sleep
 
 
 class NewTournamentCommand(Command):

@@ -13,7 +13,7 @@ class Player(DB):
     db = TinyDB("db.json")
     table = db.table("players")
 
-    def __init__(self, name: str, birth: str, sex: str, rank: int, score=0, id=None):
+    def __init__(self, name, birth, sex, rank: int, score=0, id=None):
         """All the attributes of a player."""
         self.name = name
         self.birth = birth

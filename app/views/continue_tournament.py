@@ -14,7 +14,9 @@ class ContinueView(View):
     def get_command(self):
         tournament_choosen = None
         if not self.all_tournaments:
-            return NavigationCommand("mainpage", 'There is no tournament in the database')
+            return NavigationCommand(
+                "mainpage", "There is no tournament in the database"
+            )
         while not tournament_choosen:
             self.print_table(
                 ["id", "name"],

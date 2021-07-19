@@ -1,4 +1,3 @@
-from time import sleep
 from app.commands.continue_tournament import ContinueCommand
 from .abc import View
 

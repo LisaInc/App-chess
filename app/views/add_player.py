@@ -1,7 +1,5 @@
 """Add a player."""
 
-import re
-
 from app.commands.add_player import AddPlayerCommand
 from .abc import View
 

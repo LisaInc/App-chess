@@ -1,7 +1,6 @@
 """Module of a tournament."""
 
 
-import datetime
 from faker import Faker
 from random import choice
 from tinydb import TinyDB
@@ -52,7 +51,7 @@ class Tournament(DB):
         name = city + " tournament"
         time_control = choice(["Bullet", "Blitz", "Speed chess"])
         players = [Player.auto_init() for _ in range(8)]
-        date = str(datetime.date.today())
+        date = str(date.today())
         return Tournament(name, city, date, date, players, time_control)
 
     def __str__(self):
