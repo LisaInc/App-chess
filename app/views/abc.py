@@ -88,5 +88,7 @@ class View:
         self.console.print(table)
 
     def check_date(self, date):
-        """Check if the str is a date,."""
-        return bool(re.search("\d{4}/\d{2}/\d{2}", date))
+        """Check if the str is a date."""
+        return bool(
+            re.search("^\d{4}\/(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])$", date)
+        )

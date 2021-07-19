@@ -29,7 +29,7 @@ class NewTournamentView(View):
             if choice == "1":
                 return NewTournamentCommand(None)
             elif choice == "2":
-                return NavigationCommand("mainpage")
+                return NavigationCommand("main page")
             else:
                 print("Press 1 or 2")
         self.tournament_data = {

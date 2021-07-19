@@ -1,6 +1,6 @@
 """Add a player."""
 
-import re  # attention à l'ordre des imports
+import re
 
 from app.commands.add_player import AddPlayerCommand
 from .abc import View
@@ -45,7 +45,7 @@ class AddPlayerView(View):
                 self.player_data["rank"] = self.ask_again("rank")
                 correct_info = False
             else:
-                self.player_data["rank"] = int(self.player_data["rank"])
+                self.player_data["rank"] = self.player_data["rank"]
 
     @classmethod
     def ask_again(self, wrong_info):

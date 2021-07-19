@@ -18,7 +18,7 @@ class Player(DB):
         self.name = name
         self.birth = birth
         self.sex = sex
-        self.rank = rank
+        self.rank = int(rank)
         self.id = id
         self.score = score
 

@@ -1,4 +1,5 @@
-from app.commands.continue_tournament import ContinueCommand
+from app.commands import ContinueCommand
+from app.models import Tournament
 from .abc import View
 
 

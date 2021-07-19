@@ -18,4 +18,4 @@ class AddPlayerCommand(Command):
     def execute(self, context):
         """Add the player and go to the main page."""
         self.player.save()
-        context.change_page("mainpage")
+        context.change_page("main page")

@@ -87,7 +87,7 @@ if __name__ == "__main__":
     round = Round(liste)
     round.save()
     round = round.get(1)
-    round.matchs[0].add_result(45555, 555)
+    round.matchs[0].add_result(0, 1)
     round.add_endtime()
     for match in round.matchs:
         print(match.result)
