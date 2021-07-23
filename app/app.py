@@ -7,6 +7,8 @@ from app.views import (
     NewTournamentView,
     PlayARoundView,
     ContinueView,
+    TournamentEndedView,
+    ChangeRankView,
 )
 
 
@@ -25,6 +27,8 @@ class Application:
         "new": NewTournamentView,
         "continue": ContinueView,
         "play round": PlayARoundView,
+        "tournament ended": TournamentEndedView,
+        "rank": ChangeRankView,
     }
 
     def __init__(self):

@@ -4,18 +4,19 @@ from .abc import Command
 from app.models import Player
 
 
-class AddPlayerCommand(Command):
-    """Add a plyer to the data base."""
+class ChangeRankCommand(Command):
+    """Change the rank of one or more player."""
 
     key = "add"
     readable_key = key
     description = "Add a player to the db."
 
-    def __init__(self, player_info):
+    def __init__(self, player, new_rank):
         """Init the command and the player to add to the db."""
-        self.player = Player(**player_info) if player_info else Player.auto_init()
+        self.player = player
+        self.new_rank = new_rank
 
     def execute(self, context):
-        """Add the player and go to the main page."""
+        self.player.rank = self.new_rank
         self.player.save()
         context.change_page("main page")

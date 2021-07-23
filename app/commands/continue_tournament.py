@@ -5,7 +5,7 @@ from app.models import Tournament
 
 
 class ContinueCommand(Command):
-    """Choose a tournament to continue."""
+    """Continue a tournament."""
 
     key = "continue"
     readable_key = key
@@ -27,4 +27,5 @@ class ContinueCommand(Command):
                 self.tournament = Tournament.get(self.tournament.id)
             context.change_page("play round", self.tournament)
         else:
-            context.change_page("main page")
+            self.tournament.save()
+            context.change_page("tournament ended", self.tournament)

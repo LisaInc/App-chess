@@ -4,7 +4,7 @@
 from faker import Faker
 from random import choice
 from tinydb import TinyDB
-from datetime import date
+import datetime
 
 from .match import Match
 from .player import Player
@@ -51,7 +51,7 @@ class Tournament(DB):
         name = city + " tournament"
         time_control = choice(["Bullet", "Blitz", "Speed chess"])
         players = [Player.auto_init() for _ in range(8)]
-        date = str(date.today())
+        date = str(datetime.date.today())
         return Tournament(name, city, date, date, players, time_control)
 
     def __str__(self):

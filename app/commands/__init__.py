@@ -9,3 +9,4 @@ from .add_player import AddPlayerCommand
 from .new_tournament import NewTournamentCommand
 from .navigation import NavigationCommand
 from .continue_tournament import ContinueCommand
+from .change_rank import ChangeRankCommand

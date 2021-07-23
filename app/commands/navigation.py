@@ -1,4 +1,4 @@
-"""Main page command."""
+"""Navigation command."""
 
 from app import app
 from .abc import Command
@@ -13,10 +13,11 @@ class NavigationCommand(Command):
         "\n - Add : add a new player"
         "\n - New : Start a new tournament"
         "\n - Continue: Continue a tournament saved on the db"
+        "\n - Rank: Change the rank of a player"
     )
     readable_key = key
     description = "Go to the wanted page."
-    possible_path = ["main page", "add", "new", "continue"]
+    possible_path = ["main page", "add", "new", "continue", "tournament ended", "rank"]
 
     def __init__(self, choice: str, *arg):
         """Init."""

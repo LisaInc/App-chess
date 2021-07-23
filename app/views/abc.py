@@ -90,5 +90,13 @@ class View:
     def check_date(self, date):
         """Check if the str is a date."""
         return bool(
-            re.search("^\d{4}\/(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])$", date)
+            re.search("^[0-9]{4}/(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])$", date)
         )
+
+    def print_rounds(self, tournament):
+        columns = ["Round", "State"]
+        rows = []
+        for i, round in enumerate(tournament.rounds):
+            state = "Finish" if round.is_ended() else "Ongoing"
+            rows.append((f"Round {i}", state))
+        self.print_table(columns, rows)

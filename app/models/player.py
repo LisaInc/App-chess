@@ -61,9 +61,10 @@ if __name__ == "__main__":
     player = Player.auto_init()
 
     id = player.id
-    player1 = Player.get(1)
+    player.score = 5
 
-    player1.rank = 12
-    player1.save()
+    player.rank = 12
+    player.save()
 
+    player1 = Player.get(int(id))
     print(player1)

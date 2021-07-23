@@ -14,7 +14,8 @@ class MainPageView(View):
 
     def display_body(self):
         """Menu."""
-        tprint("Welcome", font="rnd")
+        self.console.clear
+        # tprint("Welcome", font="utopiabi")
         self.console.print(":chess_pawn: Menu :chess_pawn:", style="bold")
         if self.messages:
             self.display_messages()
