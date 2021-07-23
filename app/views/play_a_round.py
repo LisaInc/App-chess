@@ -1,16 +1,17 @@
-from app.commands.continue_tournament import ContinueCommand
+from app.commands import ContinueCommand
+from app.models import Tournament
+
 from .abc import View
 
 
 class PlayARoundView(View):
-    def __init__(self, tournament):
+    def __init__(self, tournament_id):
         """Init."""
         super().__init__()
         self.title = "Play a round"
-        self.tournament = tournament
+        self.tournament = Tournament.get(tournament_id)
 
     def get_command(self):
-
         current_round = self.tournament.rounds[-1]
         currrent_nb_round = len(self.tournament.rounds)
 
@@ -39,9 +40,9 @@ class PlayARoundView(View):
                         self.tournament.rounds[-1].matchs[int(id)].add_result(0.5, 0.5)
                     else:
                         winner = input("Select 1, 2 or 3: ")
-                current_round.save()
             self.console.clear()
-        return ContinueCommand(self.tournament)
+        current_round.save()
+        return ContinueCommand(self.tournament.id)
 
     def print_round(self, round):
         columns = ["Match (id)", "Player 1", "Player 2", "Score (P1 - P2)"]

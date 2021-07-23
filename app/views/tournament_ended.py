@@ -1,13 +1,14 @@
 from .abc import View
-from app.commands.navigation import NavigationCommand
+from app.commands import NavigationCommand
+from app.models import Tournament
 
 
 class TournamentEndedView(View):
-    def __init__(self, tournament):
+    def __init__(self, tournament_id):
         """Init."""
         super().__init__()
         self.title = "Display a round"
-        self.tournament = tournament
+        self.tournament = Tournament.get(tournament_id)
         self.commands.append(NavigationCommand)
 
     def display_body(self):

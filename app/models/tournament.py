@@ -123,7 +123,7 @@ class Tournament(DB):
         return matchs
 
     def get_rounds(self):
-        """Create a round from the scorethat does not already exist."""
+        """Create a round from the score that does not already exist."""
         blacklist = []
         rounds = []
         for _ in range(7):
@@ -174,6 +174,10 @@ if __name__ == "__main__":
             match.add_result(*choice(choices))
             tournament.rounds[0].add_endtime()
         round.add_endtime()
+        for player in tournament.players:
+            print(player.name, player.score)
+        print("\n")
+
     tournament.save()
     tournament1 = Tournament.get(1)
     print(tournament1)

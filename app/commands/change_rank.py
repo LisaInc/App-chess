@@ -1,7 +1,6 @@
 """Add player command."""
 
 from .abc import Command
-from app.models import Player
 
 
 class ChangeRankCommand(Command):

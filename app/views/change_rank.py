@@ -12,21 +12,22 @@ class ChangeRankView(View):
         self.all_players = Player.all()
 
     def get_command(self):
-        player_choosen = None
+        self.print_table(
+            ["id", "name", "rank"],
+            [
+                (str(player.id), player.name, str(player.rank))
+                for player in self.all_players
+            ],
+            "List of all the player in the data base:",
+        )
+        id = input("player's id: ")
+        while not id.isdigit():
+            id = input("player's id (must be a number): ")
+        player_choosen = Player.get(int(id))
         while not player_choosen:
-            self.print_table(
-                ["id", "name", "rank"],
-                [
-                    (str(player.id), player.name, str(player.rank))
-                    for player in self.all_players
-                ],
-                "List of all the player in the data base:",
-            )
             id = input("player's id: ")
-            if id.isdigit():
-                player_choosen = Player.get(int(id))
-                if player_choosen:
-                    new_rank = input("New rank: ")
-                    if new_rank.isdigit():
-                        return ChangeRankCommand(player_choosen, new_rank)
-            print("Enter the player's id")
+            player_choosen = Player.get(int(id))
+        new_rank = input("New rank: ")
+        while not new_rank.isdigit():
+            new_rank = input("New rank (must be a number): ")
+        return ChangeRankCommand(player_choosen, new_rank)

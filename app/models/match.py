@@ -25,6 +25,8 @@ class Match(DB):
         self.result[str(self.player2.id)] = result_player2
         self.player1.score += result_player1
         self.player2.score += result_player2
+        self.player1.save()
+        self.player2.save()
 
     def __str__(self):
         """Return the attribute of the match when print is use."""

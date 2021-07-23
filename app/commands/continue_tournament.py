@@ -11,9 +11,9 @@ class ContinueCommand(Command):
     readable_key = key
     description = "Play the next round."
 
-    def __init__(self, tournament):
+    def __init__(self, tournament_id):
         """Init the command and the player to add to the db."""
-        self.tournament = tournament
+        self.tournament = Tournament.get(tournament_id)
 
     def execute(self, context):
         """Add the player and go to the main page."""
@@ -24,8 +24,7 @@ class ContinueCommand(Command):
                 current_round.add_endtime()
                 self.tournament.pairing_for_a_round()
                 self.tournament.save()
-                self.tournament = Tournament.get(self.tournament.id)
-            context.change_page("play round", self.tournament)
+            context.change_page("play round", self.tournament.id)
         else:
             self.tournament.save()
-            context.change_page("tournament ended", self.tournament)
+            context.change_page("tournament ended", self.tournament.id)

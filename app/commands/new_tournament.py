@@ -21,4 +21,4 @@ class NewTournamentCommand(Command):
         """Add the player and go to the main page."""
         self.tournament.pairing_for_a_round()
         self.tournament.save()
-        context.change_page("play round", Tournament.get(self.tournament.id))
+        context.change_page("play round", self.tournament.id)

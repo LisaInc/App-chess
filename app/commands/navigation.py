@@ -14,6 +14,7 @@ class NavigationCommand(Command):
         "\n - New : Start a new tournament"
         "\n - Continue: Continue a tournament saved on the db"
         "\n - Rank: Change the rank of a player"
+        "\n"
     )
     readable_key = key
     description = "Go to the wanted page."
