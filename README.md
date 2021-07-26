@@ -1,14 +1,21 @@
-App-chess 
+# App-chess 
+Application use to manage tournmanent
 
-Application for tournmanent management in command line using the swiss-system 
-All the data created in a tournament sill be save in a json with tinyDB
+## Features:
+- command line 
+- using the swiss-system to match the players
+- all the data created in a tournament sill be save in a json with tinyDB
 
+## Installation 
 Run the app:
+```sh
 python3 main.py
-
-Run insall all dependencies:
+```
+Install all dependencies:
+```sh
 pip install requirements.txt 
-
+```
 Run flake8:
+```sh
 flake8 --format=html --htmldir=flake-report --exclude .git,.venv --max-line-length=119
-
+```
