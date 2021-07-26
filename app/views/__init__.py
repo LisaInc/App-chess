@@ -9,3 +9,4 @@ from .play_a_round import PlayARoundView
 from .continue_tournament import ContinueView
 from .tournament_ended import TournamentEndedView
 from .change_rank import ChangeRankView
+from .history import HistoryView

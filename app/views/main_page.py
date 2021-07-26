@@ -1,5 +1,3 @@
-from art import tprint
-
 from .abc import View
 from app.commands.navigation import NavigationCommand
 
@@ -15,7 +13,6 @@ class MainPageView(View):
     def display_body(self):
         """Menu."""
         self.console.clear
-        # tprint("Welcome", font="utopiabi")
         self.console.print(":chess_pawn: Menu :chess_pawn:", style="bold")
         if self.messages:
             self.display_messages()

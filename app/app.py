@@ -9,6 +9,7 @@ from app.views import (
     ContinueView,
     TournamentEndedView,
     ChangeRankView,
+    HistoryView,
 )
 
 
@@ -29,6 +30,7 @@ class Application:
         "play round": PlayARoundView,
         "tournament ended": TournamentEndedView,
         "rank": ChangeRankView,
+        "history": HistoryView,
     }
 
     def __init__(self):

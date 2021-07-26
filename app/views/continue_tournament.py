@@ -20,19 +20,10 @@ class ContinueView(View):
                 if len(tournament.rounds) < tournament.nb_rounds
             ]
             if tournament_to_continue:
-                self.print_table(
-                    ["id", "name"],
-                    [
-                        (str(tournament.id), tournament.name)
-                        for tournament in tournament_to_continue
-                    ],
-                    "List of all the tournament in the data base:",
-                )
+                self.print_tournaments(tournament_to_continue)
                 id = input("Tournament's id: ")
-                if id.isdigit():
-                    tournament_choosen = Tournament.get(int(id))
-                    if tournament_choosen:
-                        return ContinueCommand(tournament_choosen)
+                if id.isdigit() and Tournament.get(int(id)):
+                    return ContinueCommand(int(id))
                 print("Enter the tournament's id")
             else:
                 return NavigationCommand(

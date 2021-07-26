@@ -1,5 +1,4 @@
 appdirs==1.4.4
-art==5.2
 black==21.6b0
 click==8.0.1
 colorama==0.4.4

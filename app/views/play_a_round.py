@@ -43,15 +43,3 @@ class PlayARoundView(View):
             self.console.clear()
         current_round.save()
         return ContinueCommand(self.tournament.id)
-
-    def print_round(self, round):
-        columns = ["Match (id)", "Player 1", "Player 2", "Score (P1 - P2)"]
-        rows = []
-        for i, match in enumerate(round.matchs):
-            score = (
-                f"{match.result[str(match.player1.id)]} - {match.result[str(match.player2.id)]}"
-                if match.result
-                else "Ongoing"
-            )
-            rows.append((f"Match {i}", match.player1.name, match.player2.name, score))
-        self.print_table(columns, rows)

@@ -50,6 +50,7 @@ class NewTournamentView(View):
         self.check_data_tournement()
 
         players = []
+        players_id = []
         while len(players) < 8:
             print("Choose a player from the table:")
             self.print_table(
@@ -59,8 +60,9 @@ class NewTournamentView(View):
             id = input("Player's id:")
             if id.isdigit():
                 player_to_add = Player.get(int(id))
-                if player_to_add and player_to_add not in players:
+                if player_to_add and id not in players_id:
                     players.append(player_to_add)
+                    players_id.append(id)
                     self.print_table(
                         ["id", "Names"],
                         [(str(player.id), player.name) for player in players],

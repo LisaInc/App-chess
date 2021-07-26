@@ -14,11 +14,20 @@ class NavigationCommand(Command):
         "\n - New : Start a new tournament"
         "\n - Continue: Continue a tournament saved on the db"
         "\n - Rank: Change the rank of a player"
+        "\n - History: Check a tournament in the db"
         "\n"
     )
     readable_key = key
     description = "Go to the wanted page."
-    possible_path = ["main page", "add", "new", "continue", "tournament ended", "rank"]
+    possible_path = [
+        "main page",
+        "add",
+        "new",
+        "continue",
+        "tournament ended",
+        "rank",
+        "history",
+    ]
 
     def __init__(self, choice: str, *arg):
         """Init."""

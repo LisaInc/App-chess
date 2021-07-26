@@ -7,7 +7,6 @@ class TournamentEndedView(View):
     def __init__(self, tournament_id):
         """Init."""
         super().__init__()
-        self.title = "Display a round"
         self.tournament = Tournament.get(tournament_id)
         self.commands.append(NavigationCommand)
 
@@ -19,4 +18,5 @@ class TournamentEndedView(View):
         self.print_table(
             ("Player", "Player's score"),
             [(player.name, str(player.score)) for player in sorted_by_score],
+            "Final score of all the competitors",
         )

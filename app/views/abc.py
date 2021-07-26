@@ -36,7 +36,6 @@ class View:
         self.display_body()
         self.display_footer()
         print()
-        print(self.enter_choice, end="")
 
     def display_header(self):
         """Display the Header."""
@@ -62,10 +61,11 @@ class View:
         for command in self.commands:
             if command.key:
                 print(command.readable_key, ":", command.description)
+        print(self.enter_choice, end="")
 
     def get_command(self):
         """Get the command."""
-        choice = input()
+        choice = input("")
 
         for Command in self.commands:
             if choice in Command.get_choices():
@@ -100,3 +100,21 @@ class View:
             state = "Finish" if round.is_ended() else "Ongoing"
             rows.append((f"Round {i}", state))
         self.print_table(columns, rows)
+
+    def print_round(self, round):
+        columns = ["Match (id)", "Player 1", "Player 2", "Score (P1 - P2)"]
+        rows = []
+        for i, match in enumerate(round.matchs):
+            score = (
+                f"{match.result[str(match.player1.id)]} - {match.result[str(match.player2.id)]}"
+                if match.result
+                else "Ongoing"
+            )
+            rows.append((f"Match {i}", match.player1.name, match.player2.name, score))
+        self.print_table(columns, rows)
+
+    def print_tournaments(self, tournaments):
+        self.print_table(
+            ["id", "name"],
+            [(str(tournament.id), tournament.name) for tournament in tournaments],
+        )
